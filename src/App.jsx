@@ -1,12 +1,15 @@
 import React from 'react';
-import './App.css';
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
+import Todo from './Components/Todo';
 
 const App = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <MantineProvider>
+      <Todo />
+    </MantineProvider>
+
   )
 }
 
-export default App
+export default App;
