@@ -1,10 +1,10 @@
 import React from 'react';
-import Todo from '../Components/Todo';
+import Form from '../Components/Form';
 
 const Home = () => {
   return (
     <div>
-      <Todo />
+      <Form />
     </div>
   )
 }
