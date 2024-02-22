@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Todo from '../Components/Todo';
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <Todo />
+    </div>
   )
 }
 
