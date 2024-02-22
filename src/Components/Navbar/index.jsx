@@ -3,19 +3,21 @@ import { NavLink } from 'react-router-dom';
 import { IconMenu2 } from '@tabler/icons-react';
 import { IconX } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
+import './Navbar.scss';
+import { logo } from '../../assets';
 
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
     return (
         <div className='nav'>
             <div className='logo'>
-
+                <img src={logo} alt='logo' />
             </div>
             <ul className='nav__links'>
                 {['home', 'tasks', 'calendar', 'account'].map((link) => (
-                    <li className='nav__link' key={`link-${link}`}>
+                    <li key={`link-${link}`}>
                         <div />
-                        <NavLink to={link === 'home' ? '/' : `/${link}`}>
+                        <NavLink className='nav__link' to={link === 'home' ? '/' : `/${link}`}>
                             {link}
                         </NavLink>
                     </li>
@@ -32,9 +34,9 @@ const Navbar = () => {
                         <IconX onClick={() => setToggle(false)} />
                         <ul>
                             {['home', 'tasks', 'calendar', 'account'].map((link) => (
-                                <li className='nav__link' key={`link-${link}`}>
-                                    <div />
+                                <li key={`link-${link}`}>
                                     <NavLink
+                                        className='nav__link'
                                         to={link === 'home' ? '/' : `/${link}`}
                                         onClick={() => setToggle(false)}
                                     >
