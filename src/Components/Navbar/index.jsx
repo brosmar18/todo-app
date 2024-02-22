@@ -1,11 +1,8 @@
-import React from 'react';
-import { NavLink } from '@mantine/core';
+import React from 'react'
 
 const Navbar = () => {
     return (
-        <div>
-           Navbar
-        </div>
+        <div>Navbar</div>
     )
 }
 
