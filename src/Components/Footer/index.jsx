@@ -5,7 +5,6 @@ import './Footer.scss';
 const Footer = () => {
     return (
         <footer className='footer'>
-            <img src={logo} alt='logo' />
             <div className='footer__socials'>
                 <IconBrandInstagram size={20} />
                 <IconBrandTwitter size={20} />
