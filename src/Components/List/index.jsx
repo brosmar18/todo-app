@@ -1,12 +1,12 @@
 import { Pagination } from '@mantine/core';
 import { SettingsContext } from '../../context/Settings';
-import { useTasks } from '../../context/TaskContext'; 
+import { useTasks } from '../../context/TaskContext';
 import { useContext, useState, useEffect } from 'react';
 import './List.scss';
 
 const List = () => {
     const { displayLimit, sortField, hideCompleted } = useContext(SettingsContext);
-    const { tasks, toggleTaskCompletion } = useTasks(); 
+    const { tasks, toggleTaskCompletion } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
 
