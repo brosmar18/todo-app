@@ -10,7 +10,7 @@ The ToDo App assignment focuses on enhancing the user experience and functionali
 
 ### Links and Resources
 
-- Main [Deployment](https://todo-app-brosmar18.vercel.app/)
+- Main Branch [Deployment](https://todo-app-brosmar18.vercel.app/)
 
 ### Collaborators
 
