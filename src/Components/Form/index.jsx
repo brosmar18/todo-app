@@ -18,22 +18,22 @@ const Form = () => {
     }
 
     return (
-        <div className='form__container'>
-            <h2 className='form__title'>Add Task</h2>
-            <form onSubmit={(e) => handleFormSubmit(e)}>
+        <div className='form__container' data-testid="form-container">
+            <h2 className='form__title' data-testid="form-title">Add Task</h2>
+            <form onSubmit={(e) => handleFormSubmit(e)} data-testid="task-form">
                 <div className="form__section">
                     <label>Task</label>
-                    <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
+                    <input onChange={handleChange} name="text" type="text" placeholder="Item Details" data-testid="task-input" />
                 </div>
                 <div className="form__section">
                     <label>Assigned to</label>
-                    <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
+                    <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" data-testid="assignee-input" />
                 </div>
                 <div className="form__section">
                     <label>Difficulty</label>
-                    <input onChange={handleChange} defaultValue={defaultValues.difficulty} name="difficulty" type="range" min={1} max={5} />
+                    <input onChange={handleChange} defaultValue={defaultValues.difficulty} name="difficulty" type="range" min={1} max={5} data-testid="difficulty-range" />
                 </div>
-                <button type="submit">Add Item</button>
+                <button type="submit" data-testid="submit-button">Add Item</button>
             </form>
         </div>
     );
