@@ -91,10 +91,6 @@ The ToDo App emphasizes thorough testing for each of its components to ensure fu
 
 The tests for the Form component focus on its rendering and interaction capabilities. It includes checks to ensure all form elements are correctly displayed, such as input fields for task details, assignee, and difficulty level, as well as the submit button. Additionally, it tests user interactions with the form, verifying that input values are accurately captured and handled within the component.
 
-#### List Component (`List/List.test.jsx`)
-
-For the List component, testing is designed to validate the rendering of task items according to the specified context settings, such as display limits and sorting preferences. This includes ensuring that tasks are displayed correctly and in the right order. The tests also cover the functionality of the Pagination component, ensuring users can navigate through different pages of tasks seamlessly.
-
 #### Navbar Component (`Navbar/Navbar.test.jsx`)
 
 The Navbar component tests ensure that the navbar is properly rendered, including the display of the logo and navigation links for different sections of the app like Home, Tasks, Calendar, and Account. Tests also cover the responsive aspects of the Navbar, particularly the functionality of the mobile menu icon and the display of navigation links in a mobile view.
