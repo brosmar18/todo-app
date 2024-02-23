@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import './List.scss';
 
 const List = ({ tasks }) => {
-    const { displayLimit } = useContext(SettingsContext);
+    const { displayLimit, sortField } = useContext(SettingsContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
 
@@ -12,10 +12,16 @@ const List = ({ tasks }) => {
 
 
     useEffect(() => {
+        // sort tasks based on sortField
+        const sortedTasks = [...tasks].sort((a, b) => {
+            return a[sortField] - b[sortField];
+        });
+
+        // slice sorted tasks for pagination
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
-        setPaginatedTasks(tasks.slice(start, end));
-    }, [tasks, currentPage, displayLimit]);
+        setPaginatedTasks(sortedTasks.slice(start, end));
+    }, [tasks, currentPage, displayLimit, sortField]);
 
     return (
         <div className='list'>
