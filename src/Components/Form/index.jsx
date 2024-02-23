@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 
 
-const Form = () => {
+const Form = ({ addTask }) => {
     const [defaultValues] = useState({ difficulty: 4 });
 
     const [list, setList] = useState([]);
