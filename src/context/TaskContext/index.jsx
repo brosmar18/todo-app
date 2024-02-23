@@ -1,10 +1,10 @@
-import { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
-const TaskContext = createContext();
+const TasksContext = createContext();
 
-export const useTasks = () => useContext(TaskContext);
+export const useTasks = () => useContext(TasksContext);
 
-export const TaskProvider = ({ children }) => {
+export const TasksProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
 
     const addTask = (task) => {
@@ -24,8 +24,8 @@ export const TaskProvider = ({ children }) => {
     };
 
     return (
-        <TaskContext.Provider value={{ tasks, addTask, deleteTask, toggleTaskCompletion }}>
+        <TasksContext.Provider value={{ tasks, addTask, deleteTask, toggleTaskCompletion }}>
             {children}
-        </TaskContext.Provider>
-    )
-}
+        </TasksContext.Provider>
+    );
+};
