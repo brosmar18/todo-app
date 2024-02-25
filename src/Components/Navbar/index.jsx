@@ -1,6 +1,6 @@
 import { Avatar } from "@mantine/core";
 import { logo } from '../../assets';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { IconBell, IconUsers, IconHome, IconMenu2 } from '@tabler/icons-react';
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -78,6 +78,15 @@ const Navbar = () => {
                 <Link to='/'>
                     <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
                 </Link>
+                <ul className="flex items-center gap-5 uppercase">
+                    {['home', 'tasks', 'calendar'].map((link) => (
+                        <li key={`link-${link}`}>
+                            <NavLink>
+                                {link}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
                 <div className="flex items-center gap-2">
                     <Avatar size='lg' />
                     <IconBell size={30} />
@@ -113,6 +122,15 @@ const Navbar = () => {
                     <Link to='/' onClick={() => setToggle(!toggle)}>
                         <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
                     </Link>
+                    <ul className="flex items-center gap-5 uppercase">
+                        {['home', 'tasks', 'calendar'].map((link) => (
+                            <li key={`link-${link}`}>
+                                <NavLink to={link == 'home' ? '/' : `/${link}`} onClick={() => setToggle(false)}>
+                                    {link}
+                                </NavLink>
+                            </li>
+                        ))}
+                    </ul>
                     <div className="flex items-center gap-2">
                         <Avatar size='lg' />
                         <IconBell size={30} />
