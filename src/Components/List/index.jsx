@@ -2,7 +2,6 @@ import { Pagination } from '@mantine/core';
 import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
 import { useContext, useState, useEffect } from 'react';
-import './List.scss';
 
 const List = () => {
     const { displayLimit, sortField, hideCompleted } = useContext(SettingsContext);
@@ -25,10 +24,10 @@ const List = () => {
         setPaginatedTasks(sortedTasks.slice(start, end));
     }, [tasks, currentPage, displayLimit, sortField, hideCompleted]);
     return (
-        <div className='list' data-testid="list">
-            <h2 className='list__title'>All Tasks</h2>
+        <div data-testid="list">
+            <h2>All Tasks</h2>
             {paginatedTasks.map((task, index) => (
-                <div key={task.id} className='list__container' data-testid={`task-${index}`}>
+                <div key={task.id} data-testid={`task-${index}`}>
                     <p>Task: {task.text}</p>
                     <p>Assigned to: {task.assignee}</p>
                     <p>Difficulty: {task.difficulty}</p>

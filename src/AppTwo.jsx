@@ -7,15 +7,14 @@ import {
 } from './pages';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
-import Sidebar from './Components/Sidebar';
 
 const App = () => {
+
   const Layout = () => {
     return (
-      <div className='flex flex-col min-h-screen'>
+      <div>
         <Navbar />
-        <div className='flex flex-1'>
-          <Sidebar />
+        <div>
           <Outlet />
         </div>
         <Footer />
@@ -49,7 +48,7 @@ const App = () => {
   ]);
 
 
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
