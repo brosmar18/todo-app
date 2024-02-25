@@ -7,7 +7,6 @@ import {
 } from './pages';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
-import Sidebar from './Components/Sidebar';
 
 const App = () => {
   const Layout = () => {
@@ -15,7 +14,6 @@ const App = () => {
       <div className='flex flex-col min-h-screen'>
         <Navbar />
         <div className='flex flex-1'>
-          <Sidebar />
           <Outlet />
         </div>
         <Footer />

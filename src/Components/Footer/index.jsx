@@ -4,7 +4,7 @@ import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/
 const Footer = () => {
     return (
         <footer className='w-full'>
-
+            Footer
         </footer>
     )
 }
