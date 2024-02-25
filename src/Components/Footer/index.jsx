@@ -3,7 +3,9 @@ import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/
 
 const Footer = () => {
     return (
-        <div>Footer</div>
+        <footer className='w-full'>
+
+        </footer>
     )
 }
 
