@@ -1,9 +1,9 @@
-import React from 'react'
+import { AddTask } from '../Components/HomeComponents';
 
 const Tasks = () => {
   return (
-    <div>
-      Tasks
+    <div className='w-full h-full bg-blue-300 p-4'>
+      <AddTask />
     </div>
   )
 }

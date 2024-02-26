@@ -1,9 +1,10 @@
 import {
   ProgressCard,
-  CalendarCard,
   LiveTaskCard,
   UpcomingCard,
-  TaskPlanner
+  TaskPlanner,
+  AddTask,
+  CalendarCard
 } from '../../Components/HomeComponents';
 
 const Home = () => {
@@ -17,6 +18,8 @@ const Home = () => {
       <TaskPlanner />
       {/* Live Task Card */}
       <LiveTaskCard />
+      {/* Add Task Card */}
+      <AddTask />
       {/* Calendar Card */}
       <CalendarCard />
     </div>
