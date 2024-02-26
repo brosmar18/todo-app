@@ -73,8 +73,8 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="h-24 flex items-center justify-between px-4 md:px-12 lg:px-20 xl:px-48">
-            <div className="hidden md:flex justify-between w-full">
+        <nav className="h-24 flex items-center justify-between px-4 sm:px-12 lg:px-20 xl:px-48">
+            <div className="hidden sm:flex justify-between w-full">
                 <Link to='/'>
                     <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
                 </Link>
@@ -90,10 +90,10 @@ const Navbar = () => {
                 <div className="flex items-center gap-2">
                     <Avatar size='lg' />
                     <IconBell size={30} />
-                    <button className="px-5 rounded-md py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
+                    <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                 </div>
             </div>
-            <div className="md:hidden flex justify-end w-full">
+            <div className="sm:hidden flex justify-end w-full">
                 <button className="w-10 h-8 flex flex-col justify-between items-center z-10 relative" onClick={() => setToggle(!toggle)}>
                     <motion.div
                         variants={topVariants}
@@ -134,7 +134,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-2">
                         <Avatar size='lg' />
                         <IconBell size={30} />
-                        <button className="px-5 rounded-md py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
+                        <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                     </div>
                 </motion.div>
             )
