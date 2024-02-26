@@ -4,7 +4,7 @@ import {
   LiveTaskCard,
   UpcomingCard,
   TaskPlanner
-} from '../../Components/Home';
+} from '../../Components/HomeComponents';
 
 const Home = () => {
   return (
