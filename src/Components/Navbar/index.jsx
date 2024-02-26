@@ -88,13 +88,13 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="flex items-center gap-2">
-                    <Avatar size='lg' src='https://i.pravatar.cc/300' />
+                    <Avatar size='md' src='https://i.pravatar.cc/300' />
                     <IconBell size={30} />
                     <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                 </div>
             </div>
             <div className="sm:hidden flex justify-end w-full">
-                <button className="w-10 h-8 flex flex-col justify-between items-center z-10 relative" onClick={() => setToggle(!toggle)}>
+                <button className="w-10 h-8 flex flex-col justify-between items-center z-30 relative" onClick={() => setToggle(!toggle)}>
                     <motion.div
                         variants={topVariants}
                         animate={toggle ? "opened" : "closed"}
@@ -117,7 +117,7 @@ const Navbar = () => {
                     variants={listVariants}
                     initial='closed'
                     animate='opened'
-                    className="absolute top-0 right-0 w-[80%] h-screen bg-gray-400 text-white flex flex-col items-center justify-center gap-8"
+                    className="absolute top-0 right-0 w-[80%] h-screen bg-gray-400 text-white flex flex-col items-center justify-center gap-8 z-20"
                 >
                     <Link to='/' onClick={() => setToggle(!toggle)}>
                         <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
@@ -132,7 +132,7 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className="flex items-center gap-2">
-                        <Avatar size='lg' src='https://i.pravatar.cc/300' />
+                        <Avatar size='md' src='https://i.pravatar.cc/300' />
                         <IconBell size={30} />
                         <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                     </div>
