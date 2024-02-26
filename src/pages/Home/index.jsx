@@ -8,27 +8,17 @@ import {
 
 const Home = () => {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-[1fr,repeat(2,_2fr)] md:grid-rows-[repeat(2,_1fr)] md:gap-4 w-full p-4 bg-yellow-100">
+    <div className="flex flex-col md:grid md:grid-cols-[1fr,repeat(2, 2fr)] md:grid-rows-[repeat(2,_1fr)] gap-4 w-full p-4 bg-yellow-100 min-h-screen">
       {/* Progress Card */}
-      <div className="bg-green-300 flex items-center justify-center md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2 py-10 px-5">
-        <ProgressCard />
-      </div>
+      <ProgressCard />
       {/* Upcoming Events, Tasks Card */}
-      <div className="bg-blue-300 flex items-center justify-center md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3 py-10 px-5">
-        <UpcomingCard />
-      </div>
+      <UpcomingCard />
+      {/* Task Planner */}
+      <TaskPlanner />
       {/* Live Task Card */}
-      <div className="bg-yellow-300 flex items-center justify-center md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 py-10 px-5">
-        <TaskPlanner />
-      </div>
-      {/* Task List Card */}
-      <div className="bg-purple-300 flex items-center justify-center md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-3 py-10 px-5">
-        <LiveTaskCard />
-      </div>
+      <LiveTaskCard />
       {/* Calendar Card */}
-      <div className="bg-pink-300 flex items-center justify-center md:col-start-3 md:col-end-4 md:row-start-1 md:row-end-3 py-10 px-5">
-        <CalendarCard />
-      </div>
+      <CalendarCard />
     </div>
   );
 };

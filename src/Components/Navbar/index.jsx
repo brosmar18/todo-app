@@ -81,7 +81,7 @@ const Navbar = () => {
                 <ul className="flex items-center gap-5 uppercase">
                     {['home', 'tasks', 'calendar'].map((link) => (
                         <li key={`link-${link}`}>
-                            <NavLink>
+                            <NavLink to={link === 'home' ? '/' : `/${link}`} >
                                 {link}
                             </NavLink>
                         </li>

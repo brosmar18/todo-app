@@ -3,7 +3,7 @@ import { IconClick } from '@tabler/icons-react';
 
 const UpcomingCard = () => {
     return (
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 h-full max-w-lg">
+        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 h-full max-w-lg md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3">
             <h3 className="text-2xl font-semibold">Upcoming Task/Event</h3>
             <div className='flex flex-col items-center justify-center gap-1'>
                 <p className="text-md">02:00 - 03:00 PM</p>
