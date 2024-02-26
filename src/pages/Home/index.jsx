@@ -3,7 +3,7 @@ import {
   CalendarCard,
   LiveTaskCard,
   UpcomingCard,
-  TaskListCard
+  TaskPlanner
 } from '../../Components/Home';
 
 const Home = () => {
@@ -19,11 +19,11 @@ const Home = () => {
       </div>
       {/* Live Task Card */}
       <div className="bg-yellow-300 flex items-center justify-center md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 py-10 px-5">
-        <LiveTaskCard />
+        <TaskPlanner />
       </div>
       {/* Task List Card */}
       <div className="bg-purple-300 flex items-center justify-center md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-3 py-10 px-5">
-        <TaskListCard />
+        <LiveTaskCard />
       </div>
       {/* Calendar Card */}
       <div className="bg-pink-300 flex items-center justify-center md:col-start-3 md:col-end-4 md:row-start-1 md:row-end-3 py-10 px-5">

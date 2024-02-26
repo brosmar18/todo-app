@@ -1,4 +1,3 @@
-import { IconCalendarDue, IconCalendar } from '@tabler/icons-react';
 
 const LiveTaskCard = () => {
   return (

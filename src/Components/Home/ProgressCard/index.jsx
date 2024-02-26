@@ -1,7 +1,6 @@
 import { RingProgress, Text } from '@mantine/core';
 
 const ProgressCard = () => {
-    const progressValue = 85;
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-between space-y-4 h-full  max-w-lg">
