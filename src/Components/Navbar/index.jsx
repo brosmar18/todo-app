@@ -88,7 +88,7 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="flex items-center gap-2">
-                    <Avatar size='lg' />
+                    <Avatar size='lg' src='https://i.pravatar.cc/300' />
                     <IconBell size={30} />
                     <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                 </div>
@@ -132,7 +132,7 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className="flex items-center gap-2">
-                        <Avatar size='lg' />
+                        <Avatar size='lg' src='https://i.pravatar.cc/300' />
                         <IconBell size={30} />
                         <button className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"> Log In</button>
                     </div>

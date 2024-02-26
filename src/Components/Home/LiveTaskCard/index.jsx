@@ -17,7 +17,7 @@ const LiveTaskCard = () => {
         </div>
         <div>
           <p>
-            <span className='text-sm font-semibold text-white bg-blue-500 px-3 py-1.5 rounded-lg '>Due:</span> 02/03/2024 </p>
+            <span className='text-sm font-semibold text-white bg-blue-500 px-3 py-1.5 rounded-lg'>Due:</span> 02/03/2024 </p>
         </div>
       </div>
     </div>
