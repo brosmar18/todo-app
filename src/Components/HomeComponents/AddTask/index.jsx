@@ -3,6 +3,8 @@ import { v4 as uuid } from 'uuid';
 import { useTasks } from "../../../context/TaskContext";
 import { useState } from "react";
 import { NumberInput, Modal } from "@mantine/core";
+import { Link } from "react-router-dom";
+import { IconCheck } from '@tabler/icons-react';
 
 const AddTask = () => {
     const { addTask } = useTasks();
@@ -28,7 +30,11 @@ const AddTask = () => {
                 title="Success!"
                 centered
             >
-                <p>Task has been successfully added!</p>
+                <div className="flex flex-col items-center space-y-4">
+                    <IconCheck size={50} strokeWidth={2} color={'#1C7C54'} />
+                    <p className="text-lg font-semibold">Task has been successfully added!</p>
+                    <Link to='/tasks' className="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">See All Tasks</Link>
+                </div>
             </Modal>
             <div className="px-6 py-4">
                 <p className="font-bold text-2xl mb-2">Add Task</p>
