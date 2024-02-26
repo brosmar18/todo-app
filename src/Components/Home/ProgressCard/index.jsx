@@ -4,8 +4,8 @@ const ProgressCard = () => {
     const progressValue = 85;
 
     return (
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center space-y-4 m-5">
-            <h3 className="text-lg font-semibold">Tasks</h3>
+        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-between space-y-4 h-full  max-w-lg">
+            <h3 className="text-2xl font-semibold">Tasks</h3>
             <div className='relative'>
                 <RingProgress
                     sections={[{ value: 40, color: 'blue' }]} rootColor="black"
@@ -14,7 +14,7 @@ const ProgressCard = () => {
                             color='blue'
                             weight={700}
                             align='center'
-                            size='xl'
+                            size='2xl'
                         >
                             40%
                         </Text>
