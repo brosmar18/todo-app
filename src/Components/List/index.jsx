@@ -24,21 +24,31 @@ const List = () => {
         const end = start + displayLimit;
         setPaginatedTasks(sortedTasks.slice(start, end));
     }, [tasks, currentPage, displayLimit, sortField, hideCompleted]);
+
     return (
-        <div data-testid="list">
-            <h2>All Tasks</h2>
-            {paginatedTasks.map((task, index) => (
-                <TaskCard
-                    key={`task-card-${index}`}
-                    id={task.id}
-                    name={task.name}
-                    description={task.description}
-                    difficulty={task.difficulty}
-                    assignee={task.assignee}
-                    toggleTaskCompletion={toggleTaskCompletion}
+        <div data-testid="list" className="flex flex-col space-y-4">
+            <h2 className="text-2xl font-semibold mb-4">All Tasks</h2>
+            <div className="flex flex-wrap gap-4 justify-start">
+                {paginatedTasks.map((task, index) => (
+                    <TaskCard
+                        key={`task-card-${index}`}
+                        id={task.id}
+                        name={task.name}
+                        description={task.description}
+                        difficulty={task.difficulty}
+                        assignee={task.assignee}
+                        toggleTaskCompletion={toggleTaskCompletion}
+                    />
+                ))}
+            </div>
+            <div className="flex justify-center mt-6">
+                <Pagination
+                    total={totalPages}
+                    page={currentPage}
+                    onChange={setCurrentPage}
+                    data-testid="pagination"
                 />
-            ))}
-            <Pagination total={totalPages} page={currentPage} onChange={setCurrentPage} data-testid="pagination" />
+            </div>
         </div>
     );
 };

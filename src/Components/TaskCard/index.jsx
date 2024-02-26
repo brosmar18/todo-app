@@ -2,7 +2,7 @@ import React from 'react';
 
 const TaskCard = ({ id, name, description, difficulty, assignee, toggleTaskCompletion }) => {
     return (
-        <div className='max-w-sm rounded-lg overflow-hidden shadow-2xl bg-gradient-to-r from-blue-200 to-blue-400 p-6 text-gray-800'>
+        <div className='max-w-sm rounded-lg overflow-hidden shadow-2xl bg-gradient-to-r from-blue-200 to-blue-400 p-6 text-gray-800 w-[500px]'>
             <div className='flex justify-between items-center mb-4'>
                 <h2 className='text-2xl font-bold'>{name}</h2>
                 <span className='bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{difficulty}</span>
@@ -17,7 +17,7 @@ const TaskCard = ({ id, name, description, difficulty, assignee, toggleTaskCompl
                     </div>
                 </div>
                 <button
-                    className='py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700'
+                    className='py-2 px-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700'
                     onClick={() => toggleTaskCompletion(id)}
                 >
                     Completed
