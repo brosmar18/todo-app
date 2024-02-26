@@ -8,7 +8,7 @@ import {
 
 const Home = () => {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-[1fr,repeat(2, 2fr)] md:grid-rows-[repeat(2,_1fr)] gap-4 w-full p-4 bg-yellow-100 min-h-screen">
+    <div className="bg-blue-300 h-full w-full p-4 grid gap-4 grid-cols-1 grid-rows-6 md:grid-cols-2 md:grid-rows-4 lg:grid-cols-5 lg:grid-rows-2">
       {/* Progress Card */}
       <ProgressCard />
       {/* Upcoming Events, Tasks Card */}

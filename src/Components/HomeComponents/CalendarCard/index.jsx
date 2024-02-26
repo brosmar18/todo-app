@@ -13,7 +13,7 @@ const CalendarCard = () => {
   ];
 
   return (
-    <div className="md:col-start-3 md:col-end-4 md:row-start-1 md:row-end-3 bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 h-full w-full">
+    <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 row-start-5 row-span-2 md:col-start-1 md:col-span-2 md:row-start-3 md:row-span-2 lg:row-start-1 lg:row-span-2 lg:col-start-4 lg:col-span-2">
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">Jan 10, Tuesday</div>
         <div className="border-b-2 border-gray-100 mb-2"></div>

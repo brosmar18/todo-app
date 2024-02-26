@@ -1,7 +1,7 @@
 
 const LiveTaskCard = () => {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 h-full max-w-lg md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-3">
+    <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-around space-y-4 lg:row-start-2 lg:col-start-2 lg:col-span-2">
       <div className='flex justify-between items-center gap-2'>
         <h3 className='text-2xl font-semibold'>Task Name</h3>
         <span className='text-sm font-semibold text-white bg-red-500 px-3 py-1.5 rounded-lg'>Live</span>
