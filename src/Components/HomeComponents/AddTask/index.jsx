@@ -47,6 +47,7 @@ const AddTask = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="name"
                         type="text"
+                        required
                         placeholder="Task Name"
                         onChange={handleChange}
                     />
@@ -57,6 +58,7 @@ const AddTask = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="description"
                         placeholder="Task Description"
+                        required
                         rows="3"
                         onChange={handleChange}
                     ></textarea>
@@ -68,6 +70,7 @@ const AddTask = () => {
                         name="assignee"
                         type="text"
                         placeholder="Assignee Name"
+                        required
                         onChange={handleChange}
                     />
                 </fieldset>
@@ -76,6 +79,7 @@ const AddTask = () => {
                     <select
                         className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="difficulty"
+                        required
                         onChange={handleChange}
                         defaultValue={defaultValues.difficulty}
                     >

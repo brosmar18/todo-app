@@ -1,10 +1,11 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 const defaultSettings = {
     displayLimit: 3,
     hideCompleted: true,
-    sortField: 'difficulty'
-};
+    sortField: 'difficulty',
+    difficultyOrder: { Easy: 1, Medium: 2, Hard: 3 }
+};;
 
 export const SettingsContext = createContext(defaultSettings);
 

@@ -5,7 +5,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Table, Checkbox } from '@mantine/core';
 
 const List = () => {
-    const { displayLimit, sortField, hideCompleted } = useContext(SettingsContext);
+    const { displayLimit, sortField, hideCompleted, difficultyOrder } = useContext(SettingsContext);
     const { tasks, toggleTaskCompletion } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
@@ -16,7 +16,11 @@ const List = () => {
         const newTotalPages = Math.ceil(visibleTasks.length / displayLimit);
         setTotalPages(newTotalPages);
 
-        const sortedTasks = visibleTasks.sort((a, b) => a[sortField].localeCompare(b[sortField]));
+        const sortedTasks = visibleTasks.sort((a, b) => {
+            if (sortField === 'difficulty') {
+                return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty];
+            }
+        });
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
         setPaginatedTasks(sortedTasks.slice(start, end));
