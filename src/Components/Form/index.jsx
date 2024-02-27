@@ -27,6 +27,7 @@ const Form = () => {
                         onChange={handleChange}
                         name="name"
                         type="text"
+                        required
                         placeholder="Task Name"
                         data-testid="task-input" />
                 </fieldset>
@@ -36,6 +37,7 @@ const Form = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                         name="description"
                         placeholder="Task Description"
+                        required
                         rows="3"
                         onChange={handleChange}
                     />
@@ -46,6 +48,7 @@ const Form = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                         name="assignee"
                         type="text"
+                        required
                         placeholder="Assignee Name"
                         onChange={handleChange}
                     />
@@ -55,6 +58,7 @@ const Form = () => {
                     <select
                         className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         name="difficulty"
+                        required
                         onChange={handleChange}
                         defaultValue={defaultValues.difficulty}
                     >

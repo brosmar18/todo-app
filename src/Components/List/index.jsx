@@ -1,4 +1,3 @@
-// List/index.jsx
 import { Pagination } from '@mantine/core';
 import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
@@ -22,19 +21,20 @@ const List = () => {
         setPaginatedTasks(sortedTasks.slice(start, end));
     }, [tasks, currentPage, displayLimit, sortField, hideCompleted]);
 
+
+    // Toggles Task as Complete
+    const handleCheckboxChange = (id) => {
+        toggleTaskCompletion(id);
+    };
+
+    // Defines Table Rows
     const rows = paginatedTasks.map((task, index) => (
         <Table.Tr key={`paginatedTasks-list-${index}`}>
             <Table.Td>
                 <Checkbox
                     aria-label='Select row'
-                    checked={selectedRows.includes(task.id)} // Changed to task.id for uniqueness
-                    onChange={(event) => (
-                        setSelectedRows(
-                            event.currentTarget.checked
-                                ? [...selectedRows, task.id] // Changed to task.id
-                                : selectedRows.filter((id) => id !== task.id) // Changed to task.id
-                        )
-                    )}
+                    checked={selectedRows.includes(task.id)}
+                    onChange={() => handleCheckboxChange(task.id)}
                 />
             </Table.Td>
             <Table.Td>{task.name}</Table.Td>
@@ -42,24 +42,24 @@ const List = () => {
             <Table.Td>{task.assignee}</Table.Td>
             <Table.Td>{task.difficulty}</Table.Td>
         </Table.Tr>
-    ))
+    ));
 
     return (
-        <div data-testid="list" className="flex flex-col h-full items-center w-full">
+        <div data-testid="list" className="flex flex-col items-center w-full h-full space-y-8">
             <h2 className="text-2xl font-semibold mb-4">All Tasks</h2>
-            <div className="flex flex-col justify-between gap-4 h-full items-center">
-                <Table>
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th></Table.Th> {/* For Checkbox */}
-                            <Table.Th>Task</Table.Th>
-                            <Table.Th>Description</Table.Th>
-                            <Table.Th>Assignee</Table.Th>
-                            <Table.Th>Difficulty</Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                </Table>
+            <Table>
+                <Table.Thead>
+                    <Table.Tr>
+                        <Table.Th>Mark as Complete</Table.Th>
+                        <Table.Th>Task</Table.Th>
+                        <Table.Th>Description</Table.Th>
+                        <Table.Th>Assignee</Table.Th>
+                        <Table.Th>Difficulty</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+            <div className="mt-8">
                 <Pagination
                     total={totalPages}
                     page={currentPage}
