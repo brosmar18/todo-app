@@ -45,9 +45,9 @@ const List = () => {
     ))
 
     return (
-        <div data-testid="list" className="flex flex-col space-y-4">
+        <div data-testid="list" className="flex flex-col h-full items-center w-full">
             <h2 className="text-2xl font-semibold mb-4">All Tasks</h2>
-            <div className="flex flex-wrap gap-4 justify-start">
+            <div className="flex flex-col justify-between gap-4 h-full items-center">
                 <Table>
                     <Table.Thead>
                         <Table.Tr>
@@ -60,8 +60,6 @@ const List = () => {
                     </Table.Thead>
                     <Table.Tbody>{rows}</Table.Tbody>
                 </Table>
-            </div>
-            <div className="flex justify-center mt-6">
                 <Pagination
                     total={totalPages}
                     page={currentPage}
