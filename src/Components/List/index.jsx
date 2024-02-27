@@ -9,16 +9,24 @@ const List = () => {
     const { tasks, toggleTaskCompletion } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
-    const [selectedRows, setSelectedRows] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
 
-    const totalPages = Math.ceil(tasks.length / displayLimit);
 
     useEffect(() => {
         const visibleTasks = hideCompleted ? tasks.filter(task => !task.complete) : [...tasks];
+        // Update totalPages based on the visibleTasks
+        setTotalPages(Math.ceil(visibleTasks.length / displayLimit));
+
         const sortedTasks = visibleTasks.sort((a, b) => a[sortField] - b[sortField]);
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
         setPaginatedTasks(sortedTasks.slice(start, end));
+
+        // Resets to  page if the current page is graeter than new total pages
+        if (currentPage > totalPages) {
+            setCurrentPage(1);
+        }
+
     }, [tasks, currentPage, displayLimit, sortField, hideCompleted]);
 
 
@@ -33,7 +41,6 @@ const List = () => {
             <Table.Td>
                 <Checkbox
                     aria-label='Select row'
-                    checked={selectedRows.includes(task.id)}
                     onChange={() => handleCheckboxChange(task.id)}
                 />
             </Table.Td>
