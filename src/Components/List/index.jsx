@@ -11,24 +11,23 @@ const List = () => {
     const [paginatedTasks, setPaginatedTasks] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
-
     useEffect(() => {
         const visibleTasks = hideCompleted ? tasks.filter(task => !task.complete) : [...tasks];
-        // Update totalPages based on the visibleTasks
-        setTotalPages(Math.ceil(visibleTasks.length / displayLimit));
+        const newTotalPages = Math.ceil(visibleTasks.length / displayLimit);
+        setTotalPages(newTotalPages);
 
-        const sortedTasks = visibleTasks.sort((a, b) => a[sortField] - b[sortField]);
+        const sortedTasks = visibleTasks.sort((a, b) => a[sortField].localeCompare(b[sortField]));
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
         setPaginatedTasks(sortedTasks.slice(start, end));
-
-        // Resets to  page if the current page is graeter than new total pages
-        if (currentPage > totalPages) {
-            setCurrentPage(1);
-        }
-
     }, [tasks, currentPage, displayLimit, sortField, hideCompleted]);
 
+    useEffect(() => {
+        // If the current page is greater than the new total pages and is not the first page, go back one page
+        if (currentPage > totalPages && currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }, [totalPages, currentPage]);
 
     // Toggles Task as Complete
     const handleCheckboxChange = (id) => {
@@ -40,7 +39,7 @@ const List = () => {
         <Table.Tr key={`paginatedTasks-list-${index}`}>
             <Table.Td>
                 <Checkbox
-                    aria-label='Select row'
+                    checked={task.complete}
                     onChange={() => handleCheckboxChange(task.id)}
                 />
             </Table.Td>
@@ -70,7 +69,7 @@ const List = () => {
                 <Pagination
                     total={totalPages}
                     page={currentPage}
-                    onChange={setCurrentPage}
+                    onChange={(page) => setCurrentPage(page)}
                     data-testid="pagination"
                 />
             </div>
