@@ -29,23 +29,25 @@ const List = () => {
     };
 
     useEffect(() => {
-        // Filter tasks based on completion status if hideCompleted is true
         const filteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed') : sortedTasks;
+        const updatedTotalPages = Math.ceil(filteredTasks.length / displayLimit) || 1;
+
+        // Adjust currentPage if it exceeds totalPages due to task completion
+        if (currentPage > updatedTotalPages) {
+            setCurrentPage(updatedTotalPages);
+        } else if (currentPage < 1) {
+            setCurrentPage(1); // Ensure currentPage is at least 1
+        }
 
         // Calculate the tasks to be displayed on the current page
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
         setPaginatedTasks(filteredTasks.slice(start, end));
-
-        // Adjust currentPage if it exceeds totalPages due to task completion
-        const updatedTotalPages = Math.ceil(filteredTasks.length / displayLimit);
-        if (currentPage > updatedTotalPages) {
-            setCurrentPage(updatedTotalPages || 1); // Ensure we don't set currentPage to 0
-        }
     }, [sortedTasks, currentPage, displayLimit, hideCompleted]);
 
     // Calculate the total number of pages based on sortedTasks now
-    const totalPages = Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed').length : sortedTasks.length) / displayLimit);
+    const totalPages = Math.max(1, Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed').length : sortedTasks.length) / displayLimit));
+
 
     const handlePageChange = (page) => setCurrentPage(page);
 
