@@ -3,6 +3,7 @@ import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
 import { useContext, useState, useEffect } from 'react';
 import { Table, Checkbox } from '@mantine/core';
+import SettingsMenu from '../SettingsMenu';
 
 const List = () => {
     const { displayLimit, sortField, hideCompleted, difficultyOrder } = useContext(SettingsContext);
@@ -56,7 +57,10 @@ const List = () => {
 
     return (
         <div data-testid="list" className="flex flex-col items-center w-full h-full space-y-8">
-            <h2 className="text-2xl font-semibold mb-4">All Tasks</h2>
+            <div className='w-full flex justify-between items-center'>
+                <h2 className="text-2xl font-semibold mb-4">All Tasks</h2>
+                <SettingsMenu />
+            </div>
             <Table>
                 <Table.Thead>
                     <Table.Tr>
