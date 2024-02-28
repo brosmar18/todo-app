@@ -1,16 +1,28 @@
 import { useContext, useState, useEffect } from 'react';
-import { Tooltip, Pagination, Table, Modal, Button } from '@mantine/core';
+import { Tooltip, Pagination, Table, Modal } from '@mantine/core';
 import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
 import { IconTrash, IconCheck } from '@tabler/icons-react';
 
 const List = () => {
     const { displayLimit, hideCompleted } = useContext(SettingsContext);
-    const { sortedTasks, completeTask } = useTasks();
+    const { sortedTasks, completeTask, deleteTask } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [currentTaskId, setCurrentTaskId] = useState(null);
+
+    const handleDeleteTask = (taskId) => {
+        setCurrentTaskId(taskId);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDeleteTask = () => {
+        deleteTask(currentTaskId);
+        setIsDeleteModalOpen(false);
+    };
+
 
     const handleCompleteTask = (taskId) => {
         setCurrentTaskId(taskId);
@@ -21,7 +33,7 @@ const List = () => {
         completeTask(currentTaskId);
         setIsModalOpen(false);
         // Recalculate pagination and possibly adjust current page after task completion
-        const updatedFilteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed') : sortedTasks;
+        const updatedFilteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed' && task.status !== 'Deleted') : sortedTasks;
         const updatedTotalPages = Math.ceil(updatedFilteredTasks.length / displayLimit);
         if (currentPage > updatedTotalPages) {
             setCurrentPage(updatedTotalPages || 1); // Ensure we don't set currentPage to 0
@@ -29,7 +41,7 @@ const List = () => {
     };
 
     useEffect(() => {
-        const filteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed') : sortedTasks;
+        const filteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed' && task.status !== 'Deleted') : sortedTasks;
         const updatedTotalPages = Math.ceil(filteredTasks.length / displayLimit) || 1;
 
         // Adjust currentPage if it exceeds totalPages due to task completion
@@ -46,7 +58,7 @@ const List = () => {
     }, [sortedTasks, currentPage, displayLimit, hideCompleted]);
 
     // Calculate the total number of pages based on sortedTasks now
-    const totalPages = Math.max(1, Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed').length : sortedTasks.length) / displayLimit));
+    const totalPages = Math.max(1, Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed' && task.status !== 'Deleted').length : sortedTasks.length) / displayLimit));
 
 
     const handlePageChange = (page) => setCurrentPage(page);
@@ -69,7 +81,10 @@ const List = () => {
                 </Tooltip>
                 <span>/</span>
                 <Tooltip label="Delete" position="top" withArrow>
-                    <button className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out">
+                    <button
+                        className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out"
+                        onClick={() => handleDeleteTask(task.id)}
+                    >
                         <IconTrash size={18} className="cursor-pointer text-red-500 hover:text-red-600" />
                     </button>
                 </Tooltip>
@@ -79,6 +94,17 @@ const List = () => {
 
     return (
         <div className="flex flex-col items-center w-full h-full py-10 px-10">
+            <Modal
+                opened={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                title="Delete Task"
+            >
+                <p className="text-center mb-4">Are you sure you want to delete this task?</p>
+                <div className='flex w-full items-center justify-center gap-10'>
+                    <button className='bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit" onClick={confirmDeleteTask}>Yes</button>
+                    <button className='bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit" onClick={() => setIsDeleteModalOpen(false)}>No</button>
+                </div>
+            </Modal>
             <Modal
                 opened={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

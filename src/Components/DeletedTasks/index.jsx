@@ -4,9 +4,9 @@ import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
 import { IconTrash } from '@tabler/icons-react';
 
-const CompletedTasks = () => {
+const DeletedTasks = () => {
     const { displayLimit } = useContext(SettingsContext);
-    const { sortedTasks, deleteTask } = useTasks();
+    const { sortedTasks, permanentlyDeleteTask } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -18,30 +18,30 @@ const CompletedTasks = () => {
     };
 
     const confirmDeleteTask = () => {
-        deleteTask(currentTaskId);
+        permanentlyDeleteTask(currentTaskId);
         setIsDeleteModalOpen(false);
     };
 
     useEffect(() => {
-        // Filter to only include completed tasks
-        const completedTasks = sortedTasks.filter(task => task.status === 'Completed');
+        // Only include tasks marked as "Deleted"
+        const deletedTasks = sortedTasks.filter(task => task.status === 'Deleted');
 
-        // Adjust currentPage if it exceeds totalPages due to filtering
-        const totalPages = Math.max(1, Math.ceil(completedTasks.length / displayLimit));
+        // Adjust the current page if it exceeds the total pages after deletion
+        const totalPages = Math.max(1, Math.ceil(deletedTasks.length / displayLimit));
+
         if (currentPage > totalPages) {
-            setCurrentPage(totalPages); // Ensure currentPage is set to at least 1
+            setCurrentPage(totalPages);
         }
 
-        // Calculate the tasks to be displayed on the current page
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
-        setPaginatedTasks(completedTasks.slice(start, end));
+        setPaginatedTasks(deletedTasks.slice(start, end));
     }, [sortedTasks, currentPage, displayLimit]);
 
-    // Ensure the totalPages calculation is outside the Pagination component
-    const totalPagesCalculation = Math.max(1, Math.ceil(sortedTasks.filter(task => task.status === 'Completed').length / displayLimit));
-
     const handlePageChange = (page) => setCurrentPage(page);
+
+    // Ensure there's always at least one page
+    const totalPages = Math.max(1, Math.ceil(sortedTasks.filter(task => task.status === 'Deleted').length / displayLimit));
 
     const rows = paginatedTasks.map((task) => (
         <Table.Tr key={task.id}>
@@ -50,13 +50,13 @@ const CompletedTasks = () => {
             <Table.Td>{task.assignee}</Table.Td>
             <Table.Td>{task.difficulty}</Table.Td>
             <Table.Td>{task.status}</Table.Td>
-            <Table.Td className="flex items-center justify-center gap-2">
-                <Tooltip label="Delete" position="top" withArrow>
+            <Table.Td>
+                <Tooltip label="Permanently Delete" position="top" withArrow>
                     <button
                         className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out"
                         onClick={() => handleDeleteTask(task.id)}
                     >
-                        <IconTrash size={18} className="cursor-pointer text-red-500 hover:text-red-600" />
+                        <IconTrash size={18} className="text-red-500 hover:text-red-600" />
                     </button>
                 </Tooltip>
             </Table.Td>
@@ -68,12 +68,12 @@ const CompletedTasks = () => {
             <Modal
                 opened={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
-                title="Delete Task"
+                title="Permanently Delete Task?"
             >
-                <p className="text-center mb-4">Are you sure you want to delete this task?</p>
+                <p className="text-center mb-4">Are you sure you want to permanently delete this task?</p>
                 <div className='flex w-full items-center justify-center gap-10'>
-                    <button className='bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit" onClick={confirmDeleteTask}>Yes</button>
-                    <button className='bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit" onClick={() => setIsDeleteModalOpen(false)}>No</button>
+                    <button className='bg-green-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={confirmDeleteTask}>Yes</button>
+                    <button className='bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => setIsDeleteModalOpen(false)}>No</button>
                 </div>
             </Modal>
             <div className='h-full w-full'>
@@ -94,7 +94,7 @@ const CompletedTasks = () => {
                     <Pagination
                         page={currentPage}
                         onChange={handlePageChange}
-                        total={totalPagesCalculation}
+                        total={totalPages}
                         className="mt-8"
                     />
                 </div>
@@ -103,4 +103,4 @@ const CompletedTasks = () => {
     );
 };
 
-export default CompletedTasks;
+export default DeletedTasks;

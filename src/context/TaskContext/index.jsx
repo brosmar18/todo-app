@@ -22,8 +22,22 @@ export const TasksProvider = ({ children }) => {
     };
 
     const deleteTask = (id) => {
-        setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
+        setTasks((currentTasks) =>
+            currentTasks.map((task) =>
+                task.id === id ? { ...task, status: 'Deleted' } : task
+            )
+        );
     };
+
+    // Add this method inside the TasksProvider in TaskContext/index.jsx
+    const permanentlyDeleteTask = (id) => {
+        setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
+        // Since setTasks is async, update localStorage after a brief delay
+        setTimeout(() => {
+            localStorage.setItem('tasks', JSON.stringify(tasks.filter((task) => task.id !== id)));
+        }, 100);
+    };
+
 
     // Updated to change task status to "Completed"
     const completeTask = (id) => {
@@ -43,6 +57,7 @@ export const TasksProvider = ({ children }) => {
                 addTask,
                 deleteTask,
                 completeTask,
+                permanentlyDeleteTask
             }}
         >
             {children}
