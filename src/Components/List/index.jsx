@@ -1,7 +1,8 @@
 import { useContext, useState, useEffect } from 'react';
-import { Pagination, Table } from '@mantine/core';
+import { Tooltip, Pagination, Table } from '@mantine/core';
 import { SettingsContext } from '../../context/Settings';
 import { useTasks } from '../../context/TaskContext';
+import { IconTrash, IconCheck } from '@tabler/icons-react';
 
 const List = () => {
     const { displayLimit } = useContext(SettingsContext);
@@ -29,6 +30,22 @@ const List = () => {
             <Table.Td>{task.description}</Table.Td>
             <Table.Td>{task.assignee}</Table.Td>
             <Table.Td>{task.difficulty}</Table.Td>
+            <Table.Td className="flex items-center gap-2">
+                <Tooltip label="Mark as Completed" position="top" withArrow>
+                    <button className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out">
+                        <IconCheck size={18} className="cursor-pointer text-blue-500 hover:text-blue-600" />
+                    </button>
+                </Tooltip>
+                <span>/</span>
+                <Tooltip label="Delete" position="top" withArrow>
+                    <button className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out">
+                        <IconTrash size={18} className="cursor-pointer text-red-500 hover:text-red-600" />
+                    </button>
+                </Tooltip>
+            </Table.Td>
+
+
+
         </Table.Tr>
     ));
 
@@ -42,6 +59,7 @@ const List = () => {
                             <Table.Th>Description</Table.Th>
                             <Table.Th>Assignee</Table.Th>
                             <Table.Th>Difficulty</Table.Th>
+                            <Table.Th>Actions</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>{rows}</Table.Tbody>
