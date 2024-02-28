@@ -1,16 +1,40 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { useTasks } from '../TaskContext'; // Import the useTasks hook
 
 const defaultSettings = {
     displayLimit: 3,
     hideCompleted: true,
     sortField: 'difficulty',
-    difficultyOrder: { Easy: 1, Medium: 2, Hard: 3 }
-};;
+};
 
-export const SettingsContext = createContext(defaultSettings);
+export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState(defaultSettings);
+    const { tasks, setSortedTasks } = useTasks(); // useTasks now provides setSortedTasks
+
+    useEffect(() => {
+        // Sorting logic based on the sortField
+        const sortTasks = () => {
+            const sortOrder = {
+                'Easy': 1,
+                'Medium': 2,
+                'Hard': 3
+            };
+
+            setSortedTasks([...tasks].sort((a, b) => {
+                if (settings.sortField === 'difficulty') {
+                    return sortOrder[a.difficulty] - sortOrder[b.difficulty];
+                }
+                if (settings.sortField === 'name' || settings.sortField === 'description' || settings.sortField === 'assignee') {
+                    return a[settings.sortField].localeCompare(b[settings.sortField]);
+                }
+                return 0;
+            }));
+        };
+
+        sortTasks();
+    }, [tasks, settings.sortField, setSortedTasks]);
 
     return (
         <SettingsContext.Provider value={settings}>

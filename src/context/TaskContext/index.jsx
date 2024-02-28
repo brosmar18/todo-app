@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const TasksContext = createContext();
 
@@ -6,6 +6,7 @@ export const useTasks = () => useContext(TasksContext);
 
 export const TasksProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
+    const [sortedTasks, setSortedTasks] = useState([]);
 
     const addTask = (task) => {
         setTasks((currentTasks) => [...currentTasks, task]);
@@ -24,7 +25,7 @@ export const TasksProvider = ({ children }) => {
     };
 
     return (
-        <TasksContext.Provider value={{ tasks, addTask, deleteTask, toggleTaskCompletion }}>
+        <TasksContext.Provider value={{ tasks, sortedTasks, setSortedTasks, addTask, deleteTask, toggleTaskCompletion }}>
             {children}
         </TasksContext.Provider>
     );
