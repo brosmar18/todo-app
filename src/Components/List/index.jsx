@@ -22,15 +22,20 @@ const List = () => {
         setIsModalOpen(false);
     };
 
-    // Calculate the total number of pages based on sortedTasks now
-    const totalPages = Math.ceil(sortedTasks.length / displayLimit);
 
     useEffect(() => {
+        // Filter tasks based on completion status if hideCompleted is true
+        const filteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed') : sortedTasks;
+
         // Calculate the tasks to be displayed on the current page
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
-        setPaginatedTasks(sortedTasks.slice(start, end)); // Use sortedTasks for pagination
-    }, [sortedTasks, currentPage, displayLimit]); // Dependency array updated to sortedTasks
+        setPaginatedTasks(filteredTasks.slice(start, end)); // Use sortedTasks for pagination
+    }, [sortedTasks, currentPage, displayLimit, hideCompleted]);
+
+    // Calculate the total number of pages based on sortedTasks now
+    const totalPages = Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed').length : sortedTasks.length) / displayLimit);
+
 
     // Update current page
     const handlePageChange = (page) => setCurrentPage(page);
