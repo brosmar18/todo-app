@@ -15,13 +15,18 @@ const List = () => {
     const handleCompleteTask = (taskId) => {
         setCurrentTaskId(taskId);
         setIsModalOpen(true);
-    }
+    };
 
     const confirmCompleteTask = () => {
         completeTask(currentTaskId);
         setIsModalOpen(false);
+        // Recalculate pagination and possibly adjust current page after task completion
+        const updatedFilteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed') : sortedTasks;
+        const updatedTotalPages = Math.ceil(updatedFilteredTasks.length / displayLimit);
+        if (currentPage > updatedTotalPages) {
+            setCurrentPage(updatedTotalPages || 1); // Ensure we don't set currentPage to 0
+        }
     };
-
 
     useEffect(() => {
         // Filter tasks based on completion status if hideCompleted is true
@@ -30,17 +35,20 @@ const List = () => {
         // Calculate the tasks to be displayed on the current page
         const start = (currentPage - 1) * displayLimit;
         const end = start + displayLimit;
-        setPaginatedTasks(filteredTasks.slice(start, end)); // Use sortedTasks for pagination
+        setPaginatedTasks(filteredTasks.slice(start, end));
+
+        // Adjust currentPage if it exceeds totalPages due to task completion
+        const updatedTotalPages = Math.ceil(filteredTasks.length / displayLimit);
+        if (currentPage > updatedTotalPages) {
+            setCurrentPage(updatedTotalPages || 1); // Ensure we don't set currentPage to 0
+        }
     }, [sortedTasks, currentPage, displayLimit, hideCompleted]);
 
     // Calculate the total number of pages based on sortedTasks now
     const totalPages = Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed').length : sortedTasks.length) / displayLimit);
 
-
-    // Update current page
     const handlePageChange = (page) => setCurrentPage(page);
 
-    // Defines Table Rows
     const rows = paginatedTasks.map((task) => (
         <Table.Tr key={task.id}>
             <Table.Td>{task.name}</Table.Td>
