@@ -13,17 +13,25 @@ export const SettingsContext = createContext({
 });
 
 export const SettingsProvider = ({ children }) => {
-    const [settings, setSettings] = useState(defaultSettings);
+    const [settings, setSettings] = useState(() => {
+        // Try to read settings from local storage or fall back to default settings
+        const localSettings = localStorage.getItem('taskAppSettings');
+        return localSettings ? JSON.parse(localSettings) : defaultSettings;
+    });
     const { tasks, setSortedTasks } = useTasks();
 
     useEffect(() => {
-        // log settings whenever they change: 
+        // Log settings whenever they change
         console.log('Current Settings: ', settings);
+
+        // Save updated settings to local storage
+        localStorage.setItem('taskAppSettings', JSON.stringify(settings));
+
         const sortTasks = () => {
             const sortOrder = {
                 'Easy': 1,
                 'Medium': 2,
-                'Hard': 3
+                'Hard': 3,
             };
 
             setSortedTasks([...tasks].sort((a, b) => {

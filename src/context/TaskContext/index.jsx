@@ -29,7 +29,7 @@ export const TasksProvider = ({ children }) => {
         );
     };
 
-    // Add this method inside the TasksProvider in TaskContext/index.jsx
+
     const permanentlyDeleteTask = (id) => {
         setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
         // Since setTasks is async, update localStorage after a brief delay
