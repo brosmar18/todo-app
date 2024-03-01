@@ -40,6 +40,7 @@ const Form = () => {
                         required
                         rows="3"
                         onChange={handleChange}
+                        data-testid="description-input" 
                     />
                 </fieldset>
                 <fieldset>
@@ -51,6 +52,7 @@ const Form = () => {
                         required
                         placeholder="Assignee Name"
                         onChange={handleChange}
+                        data-testid="assignee-input" 
                     />
                 </fieldset>
                 <fieldset className='mb-4'>
@@ -61,6 +63,7 @@ const Form = () => {
                         required
                         onChange={handleChange}
                         defaultValue={defaultValues.difficulty}
+                        data-testid="difficulty-select" 
                     >
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
