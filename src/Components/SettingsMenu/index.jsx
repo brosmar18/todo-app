@@ -1,27 +1,31 @@
-import { Select, NumberInput, Switch } from "@mantine/core";
+import { Select, NumberInput, Switch, Button } from "@mantine/core";
 import { SettingsContext } from "../../context/Settings";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const SettingsMenu = () => {
     const { settings, setSettings } = useContext(SettingsContext);
+    // Create a local state to hold temporary settings
+    const [tempSettings, setTempSettings] = useState(settings);
 
-    // handler to toggle hideCompleted on switch change
+    // Update local state instead of global state
     const handleHideCompletedChange = (checked) => {
-        setSettings(prevSettings => ({ ...prevSettings, hideCompleted: checked }));
+        setTempSettings(prevTempSettings => ({ ...prevTempSettings, hideCompleted: checked }));
     };
 
-    // handler to update displayLimit 
     const handleDisplayLimitChange = (value) => {
-        setSettings(prevSettings => ({ ...prevSettings, displayLimit: value }));
+        setTempSettings(prevTempSettings => ({ ...prevTempSettings, displayLimit: value }));
     };
 
-    // handler to update sortField 
     const handleSortFieldChange = (value) => {
-        setSettings(prevSettings => ({ ...prevSettings, sortField: value }));
+        setTempSettings(prevTempSettings => ({ ...prevTempSettings, sortField: value }));
     };
 
-
-
+    // Only update the global settings when the Save button is clicked
+    const handleSaveSettings = () => {
+        setSettings(tempSettings);
+        console.log('Settings saved:', tempSettings);
+        alert('Settings have been saved successfully!');
+    };
 
     return (
         <div className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 flex flex-col w-full md:w-1/3 lg:w-1/4 mx-auto">
@@ -33,7 +37,7 @@ const SettingsMenu = () => {
                     Show Completed
                 </p>
                 <Switch
-                    checked={settings.hideCompleted}
+                    checked={tempSettings.hideCompleted}
                     onChange={(event) => handleHideCompletedChange(event.currentTarget.checked)}
                 />
             </div>
@@ -43,8 +47,8 @@ const SettingsMenu = () => {
                     placeholder="Enter a number"
                     min={1}
                     max={30}
-                    value={settings.displayLimit}
-                    onChange={handleDisplayLimitChange}
+                    value={tempSettings.displayLimit}
+                    onChange={value => handleDisplayLimitChange(value)}
                 />
             </div>
             <div className="mb-4">
@@ -52,12 +56,12 @@ const SettingsMenu = () => {
                     label='Sort By'
                     placeholder="Pick a value"
                     data={['Name', 'Description', 'Assignee', 'Difficulty']}
-                    value={settings.sortField.charAt(0).toUpperCase() + settings.sortField.slice(1)} // Assuming you want to display the capitalized value
-                    onChange={handleSortFieldChange}
+                    value={tempSettings.sortField.charAt(0).toUpperCase() + tempSettings.sortField.slice(1)} 
                 />
             </div>
+            <Button variant="outline" onClick={handleSaveSettings} className="mt-4">Save Settings</Button>
         </div>
-    )
-}
+    );
+};
 
-export default SettingsMenu
+export default SettingsMenu;
