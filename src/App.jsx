@@ -3,19 +3,18 @@ import {
   Account,
   Calendar,
   Home,
-  Tasks
+  Tasks,
+  Settings
 } from './pages';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
-import './App.css';
 
 const App = () => {
-
   const Layout = () => {
     return (
-      <div className='page'>
+      <div className='flex flex-col h-screen'>
         <Navbar />
-        <div className='main'>
+        <div className='flex-1'>
           <Outlet />
         </div>
         <Footer />
@@ -37,6 +36,10 @@ const App = () => {
           element: <Tasks />,
         },
         {
+          path: '/settings',
+          element: <Settings />,
+        },
+        {
           path: '/calendar',
           element: <Calendar />,
         },
@@ -49,7 +52,7 @@ const App = () => {
   ]);
 
 
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }
 
 export default App;

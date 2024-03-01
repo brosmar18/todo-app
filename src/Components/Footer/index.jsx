@@ -1,16 +1,18 @@
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-import './Footer.scss';
 
 const Footer = () => {
     return (
-        <footer className='footer' data-testid="footer">
-            <div className='footer__socials' data-testid="footer-socials">
-                <IconBrandInstagram size={20} data-testid="icon-instagram" />
-                <IconBrandTwitter size={20} data-testid="icon-twitter" />
-                <IconBrandYoutube size={20} data-testid="icon-youtube" />
+        <footer className='w-full bg-gray-800 text-white p-4'>
+            <div className='flex flex-col justify-center items-center md:justify-between md:flex-row-reverse container mx-auto gap-2'>
+                <div className='flex space-x-4'>
+                    <IconBrandInstagram aria-label="Instagram" />
+                    <IconBrandYoutube aria-label="YouTube" />
+                    <IconBrandTwitter aria-label="Twitter" />
+                </div>
+                <p className='text-gray-200'>&copy; To Do App. All Rights Reserved</p>
             </div>
         </footer>
     );
-};
+}
 
 export default Footer;

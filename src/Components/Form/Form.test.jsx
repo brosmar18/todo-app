@@ -1,39 +1,49 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import Form from './index';
 import { TasksProvider } from '../../context/TaskContext';
+import Form from '.';
 
-describe('Form', () => {
-    test('renders Form components correctly', () => {
+describe('Form Component', () => {
+    beforeEach(() => {
         render(
             <TasksProvider>
                 <Form />
             </TasksProvider>
         );
+    });
 
+    test('renders all form elements correctly', () => {
         expect(screen.getByTestId('form-container')).toBeInTheDocument();
         expect(screen.getByTestId('form-title')).toHaveTextContent('Add Task');
         expect(screen.getByTestId('task-form')).toBeInTheDocument();
         expect(screen.getByTestId('task-input')).toBeInTheDocument();
+        expect(screen.getByTestId('description-input')).toBeInTheDocument();
         expect(screen.getByTestId('assignee-input')).toBeInTheDocument();
-        expect(screen.getByTestId('difficulty-range')).toBeInTheDocument();
+        expect(screen.getByTestId('difficulty-select')).toBeInTheDocument();
         expect(screen.getByTestId('submit-button')).toBeInTheDocument();
     });
 
-    test('allows user to enter task details', () => {
-        render(
-            <TasksProvider>
-                <Form />
-            </TasksProvider>
-        );
+    test('allows user to input task name', () => {
+        const taskInput = screen.getByTestId('task-input');
+        fireEvent.change(taskInput, { target: { value: 'Test Task' } });
+        expect(taskInput.value).toBe('Test Task');
+    });
 
-        fireEvent.change(screen.getByTestId('task-input'), { target: { value: 'New Task' } });
-        expect(screen.getByTestId('task-input')).toHaveValue('New Task');
+    test('allows user to input task description', () => {
+        const descriptionInput = screen.getByTestId('description-input');
+        fireEvent.change(descriptionInput, { target: { value: 'Test Description' } });
+        expect(descriptionInput.value).toBe('Test Description');
+    });
 
-        fireEvent.change(screen.getByTestId('assignee-input'), { target: { value: 'John Doe' } });
-        expect(screen.getByTestId('assignee-input')).toHaveValue('John Doe');
+    test('allows user to input assignee name', () => {
+        const assigneeInput = screen.getByTestId('assignee-input');
+        fireEvent.change(assigneeInput, { target: { value: 'Test Assignee' } });
+        expect(assigneeInput.value).toBe('Test Assignee');
+    });
 
-        fireEvent.change(screen.getByTestId('difficulty-range'), { target: { value: '3' } });
-        expect(screen.getByTestId('difficulty-range')).toHaveValue('3');
+    test('allows user to select difficulty', () => {
+        const difficultySelect = screen.getByTestId('difficulty-select');
+        fireEvent.change(difficultySelect, { target: { value: 'Hard' } });
+        expect(difficultySelect.value).toBe('Hard');
     });
 
 });
