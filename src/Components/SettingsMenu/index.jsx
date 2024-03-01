@@ -17,7 +17,8 @@ const SettingsMenu = () => {
     };
 
     const handleSortFieldChange = (value) => {
-        setTempSettings(prevTempSettings => ({ ...prevTempSettings, sortField: value }));
+
+        setTempSettings(prevTempSettings => ({ ...prevTempSettings, sortField: value.toLowerCase() }));
     };
 
     // Only update the global settings when the Save button is clicked
@@ -56,7 +57,8 @@ const SettingsMenu = () => {
                     label='Sort By'
                     placeholder="Pick a value"
                     data={['Name', 'Description', 'Assignee', 'Difficulty']}
-                    value={tempSettings.sortField.charAt(0).toUpperCase() + tempSettings.sortField.slice(1)}
+                    value={tempSettings.sortField} 
+                    onChange={event => handleSortFieldChange(event)}
                 />
             </div>
             <Button variant="outline" onClick={handleSaveSettings} className="mt-4">Save Settings</Button>
