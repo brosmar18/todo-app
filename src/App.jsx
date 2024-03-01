@@ -3,7 +3,8 @@ import {
   Account,
   Calendar,
   Home,
-  Tasks
+  Tasks,
+  Settings
 } from './pages';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
@@ -33,6 +34,10 @@ const App = () => {
         {
           path: '/tasks',
           element: <Tasks />,
+        },
+        {
+          path: '/settings',
+          element: <Settings />,
         },
         {
           path: '/calendar',

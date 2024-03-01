@@ -79,7 +79,7 @@ const Navbar = () => {
                     <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
                 </Link>
                 <ul className="flex items-center gap-5 uppercase">
-                    {['home', 'tasks', 'calendar'].map((link) => (
+                    {['home', 'tasks', 'settings', 'calendar'].map((link) => (
                         <li key={`link-${link}`}>
                             <NavLink to={link === 'home' ? '/' : `/${link}`} >
                                 {link}
@@ -123,7 +123,7 @@ const Navbar = () => {
                         <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
                     </Link>
                     <ul className="flex items-center gap-5 uppercase">
-                        {['home', 'tasks', 'calendar'].map((link) => (
+                        {['home', 'tasks', 'settings', 'calendar'].map((link) => (
                             <li key={`link-${link}`}>
                                 <NavLink to={link == 'home' ? '/' : `/${link}`} onClick={() => setToggle(false)}>
                                     {link}

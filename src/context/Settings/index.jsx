@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { useTasks } from '../TaskContext'; // Import the useTasks hook
+import { useTasks } from '../TaskContext';
 
 const defaultSettings = {
     displayLimit: 3,
@@ -11,10 +11,10 @@ export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState(defaultSettings);
-    const { tasks, setSortedTasks } = useTasks(); // useTasks now provides setSortedTasks
+    const { tasks, setSortedTasks } = useTasks();
 
     useEffect(() => {
-        // Sorting logic based on the sortField
+
         const sortTasks = () => {
             const sortOrder = {
                 'Easy': 1,
