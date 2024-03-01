@@ -74,6 +74,7 @@ const List = () => {
                     <button
                         className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out"
                         onClick={() => handleCompleteTask(task.id)}
+                        data-testid={`complete-task-${task.id}`}
                     >
                         <IconCheck size={18} className="cursor-pointer text-blue-500 hover:text-blue-600" />
                     </button>
@@ -83,6 +84,7 @@ const List = () => {
                     <button
                         className="p-1 rounded hover:bg-gray-200 active:bg-gray-300 transition duration-150 ease-in-out"
                         onClick={() => handleDeleteTask(task.id)}
+                        data-testid={`delete-task-${task.id}`}
                     >
                         <IconTrash size={18} className="cursor-pointer text-red-500 hover:text-red-600" />
                     </button>
@@ -92,11 +94,12 @@ const List = () => {
     ));
 
     return (
-        <div className="flex flex-col items-center w-full h-full py-10 px-10">
+        <div data-testid='task-list' className="flex flex-col items-center w-full h-full py-10 px-10">
             <Modal
                 opened={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 title="Delete Task"
+                data-testid="delete-task-modal"
             >
                 <p className="text-center mb-4">Are you sure you want to delete this task?</p>
                 <div className='flex w-full items-center justify-center gap-10'>
@@ -108,6 +111,7 @@ const List = () => {
                 opened={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 title='Task Completion'
+                data-testid="complete-task-modal"
             >
                 <p className='text-2xl font-semibold text-center mb-5'>Mark this task as completed?</p>
                 <div className='flex w-full items-center justify-center gap-10'>
@@ -116,7 +120,7 @@ const List = () => {
                 </div>
             </Modal>
             <div className='h-full w-full'>
-                <Table>
+            <Table data-testid="task-table">
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th>Task</Table.Th>
@@ -136,6 +140,7 @@ const List = () => {
                     onChange={handlePageChange}
                     total={totalPages}
                     className="mt-8"
+                    data-testid="pagination"
                 />
             </div>
         </div>
