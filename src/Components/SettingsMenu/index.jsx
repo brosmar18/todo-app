@@ -34,7 +34,7 @@ const SettingsMenu = () => {
             </div>
             <div className="mb-4">
                 <p className="block text-gray-700 text-sm font-bold mb-2">
-                    Show Completed
+                    Hide Completed
                 </p>
                 <Switch
                     checked={tempSettings.hideCompleted}
@@ -56,7 +56,7 @@ const SettingsMenu = () => {
                     label='Sort By'
                     placeholder="Pick a value"
                     data={['Name', 'Description', 'Assignee', 'Difficulty']}
-                    value={tempSettings.sortField.charAt(0).toUpperCase() + tempSettings.sortField.slice(1)} 
+                    value={tempSettings.sortField.charAt(0).toUpperCase() + tempSettings.sortField.slice(1)}
                 />
             </div>
             <Button variant="outline" onClick={handleSaveSettings} className="mt-4">Save Settings</Button>

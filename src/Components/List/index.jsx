@@ -13,6 +13,7 @@ const List = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [currentTaskId, setCurrentTaskId] = useState(null);
+    const [totalPages, setTotalPages] = useState(1);
 
     const handleDeleteTask = (taskId) => {
         setCurrentTaskId(taskId);
@@ -42,26 +43,23 @@ const List = () => {
     };
 
     useEffect(() => {
-        const filteredTasks = hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed' && task.status !== 'Deleted') : sortedTasks;
-        const updatedTotalPages = Math.ceil(filteredTasks.length / displayLimit) || 1;
+        // Filter tasks based on `hideCompleted` and exclude 'Deleted' tasks.
+        const filteredTasks = sortedTasks.filter(task => task.status !== 'Deleted' && (!hideCompleted || task.status !== 'Completed'));
 
-        // Adjust currentPage if it exceeds totalPages due to task completion
-        if (currentPage > updatedTotalPages) {
-            setCurrentPage(updatedTotalPages);
-        } else if (currentPage < 1) {
-            setCurrentPage(1); // Ensure currentPage is at least 1
-        }
+        // Update total pages
+        const newTotalPages = Math.ceil(filteredTasks.length / displayLimit);
+        setTotalPages(newTotalPages);
 
-        // Calculate the tasks to be displayed on the current page
-        const start = (currentPage - 1) * displayLimit;
-        const end = start + displayLimit;
-        setPaginatedTasks(filteredTasks.slice(start, end));
+        // Ensure current page is within the new total pages
+        setCurrentPage(current => Math.min(current, newTotalPages));
+
+        // Calculate tasks for the current page
+        const startIdx = (currentPage - 1) * displayLimit;
+        const paginated = filteredTasks.slice(startIdx, startIdx + displayLimit);
+        setPaginatedTasks(paginated);
     }, [sortedTasks, currentPage, displayLimit, hideCompleted]);
 
-    // Calculate the total number of pages based on sortedTasks now
-    const totalPages = Math.max(1, Math.ceil((hideCompleted ? sortedTasks.filter(task => task.status !== 'Completed' && task.status !== 'Deleted').length : sortedTasks.length) / displayLimit));
-
-
+    // Handle pagination change
     const handlePageChange = (page) => setCurrentPage(page);
 
     const rows = paginatedTasks.map((task) => (
