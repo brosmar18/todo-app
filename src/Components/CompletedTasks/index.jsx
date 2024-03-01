@@ -5,7 +5,8 @@ import { useTasks } from '../../context/TaskContext';
 import { IconTrash } from '@tabler/icons-react';
 
 const CompletedTasks = () => {
-    const { displayLimit } = useContext(SettingsContext);
+    const { settings, setSettings } = useContext(SettingsContext);
+    const { displayLimit } = settings || {};
     const { sortedTasks, deleteTask } = useTasks();
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedTasks, setPaginatedTasks] = useState([]);

@@ -7,14 +7,18 @@ const defaultSettings = {
     sortField: 'difficulty',
 };
 
-export const SettingsContext = createContext();
+export const SettingsContext = createContext({
+    settings: defaultSettings,
+    setSettings: () => { },
+});
 
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState(defaultSettings);
     const { tasks, setSortedTasks } = useTasks();
 
     useEffect(() => {
-
+        // log settings whenever they change: 
+        console.log('Current Settings: ', settings);
         const sortTasks = () => {
             const sortOrder = {
                 'Easy': 1,
@@ -34,10 +38,15 @@ export const SettingsProvider = ({ children }) => {
         };
 
         sortTasks();
-    }, [tasks, settings.sortField, setSortedTasks]);
+    }, [tasks, settings, setSortedTasks]);
+
+    const contextValue = {
+        settings,
+        setSettings,
+    };
 
     return (
-        <SettingsContext.Provider value={settings}>
+        <SettingsContext.Provider value={contextValue}>
             {children}
         </SettingsContext.Provider>
     );
