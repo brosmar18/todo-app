@@ -44,6 +44,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser({});
     setIsLoggedIn(false);
+    console.log("I am logged out!");
   };
 
   const values = {
