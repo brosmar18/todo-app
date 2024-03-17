@@ -15,6 +15,7 @@
     "@mantine/hooks": "^7.5.3",
     "@tabler/icons-react": "^2.47.0",
     "framer-motion": "^11.0.5",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.8.0",
     "react-dom": "^18.2.0",
