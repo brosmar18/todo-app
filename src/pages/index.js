@@ -3,6 +3,6 @@ import Calendar from "./Calendar";
 import Home from "./Home";
 import Tasks from "./Tasks";
 import Settings from "./Settings";
-import Login from "./Login";
+import Auth from "./Auth";
 
-export { Account, Calendar, Home, Tasks, Settings, Login };
+export { Account, Calendar, Home, Tasks, Settings, Auth };

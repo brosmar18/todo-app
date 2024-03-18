@@ -4,7 +4,7 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import { Account, Calendar, Home, Tasks, Settings, Login } from "./pages";
+import { Account, Calendar, Home, Tasks, Settings, Auth } from "./pages";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/AuthContext";
@@ -44,7 +44,7 @@ const App = () => {
     },
     {
       path: "/login",
-      element: isLoggedIn ? <Navigate to="/" replace /> : <Login />,
+      element: isLoggedIn ? <Navigate to="/" replace /> : <Auth />,
     },
     // Redirects to login if any undefined route is accessed
     { path: "*", element: <Navigate to="/login" replace /> },
