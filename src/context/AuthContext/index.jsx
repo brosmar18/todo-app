@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 export const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
-  // create some initial state
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
 
   const _validateToken = (token) => {
     try {
-      let validUser = jwtDecode(token); // does this fail appropriately?
+      let validUser = jwtDecode(token); 
       console.log("validUser", validUser);
       if (validUser) {
         setUser(validUser);
@@ -50,12 +50,12 @@ const AuthProvider = ({ children }) => {
   const values = {
     isLoggedIn,
     user,
-    error, // does this ALWAYS make sense?
+    error,
     login,
     logout,
     can,
   };
-  // use component to "wrap" the children and provide context
+
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 

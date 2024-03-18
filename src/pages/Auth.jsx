@@ -10,23 +10,15 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 const Auth = () => {
-  const { login, register } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [role, setRole] = useState("");
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     login(username, password);
-  };
-
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    register(firstName, lastName, role, username, password);
   };
 
   const toggleForm = () => {
@@ -107,14 +99,12 @@ const Auth = () => {
                 Login
               </Anchor>
             </div>
-            <form onSubmit={handleRegisterSubmit}>
+            <form>
               <TextInput
                 label="First Name"
                 id="firstName"
                 placeholder="first name"
                 required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
                 className="mb-4"
               />
               <TextInput
@@ -122,16 +112,12 @@ const Auth = () => {
                 id="lastName"
                 placeholder="last name"
                 required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
                 className="mb-4"
               />
               <NativeSelect
                 label="Role"
                 id="role"
                 required
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
                 data={[
                   "Software Developer",
                   "Graphic Designer",
@@ -145,8 +131,6 @@ const Auth = () => {
                 id="username"
                 placeholder="username"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 className="mb-4"
               />
               <PasswordInput
@@ -155,8 +139,6 @@ const Auth = () => {
                 placeholder="Your password"
                 required
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="mb-4"
               />
               <Button
