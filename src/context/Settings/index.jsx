@@ -1,61 +1,58 @@
-import { createContext, useState, useContext, useEffect } from 'react';
-import { useTasks } from '../TaskContext';
+import React, { createContext, useContext, useState } from "react";
+export const SettingsContext = createContext();
 
-const defaultSettings = {
-    displayLimit: 3,
-    hideCompleted: true,
-    sortField: 'difficulty',
+// Custom hook to easily access the SettingsContext value
+export const useSettings = () => {
+  const context = useContext(SettingsContext);
+  if (context === undefined) {
+    throw new Error("useSettings must be used within a SettingsProvider");
+  }
+  return context;
 };
 
-export const SettingsContext = createContext({
-    settings: defaultSettings,
-    setSettings: () => { },
-});
-
+// SettingsProvider component that provides the settings-related functionality
 export const SettingsProvider = ({ children }) => {
-    const [settings, setSettings] = useState(() => {
-        // Try to read settings from local storage or fall back to default settings
-        const localSettings = localStorage.getItem('taskAppSettings');
-        return localSettings ? JSON.parse(localSettings) : defaultSettings;
-    });
-    const { tasks, setSortedTasks } = useTasks();
+  const [settings, setSettings] = useState({
+    displayLimit: 3,
+    hideCompleted: true,
+    sortField: "difficulty",
+  });
 
-    useEffect(() => {
-        // Log settings whenever they change
-        console.log('Current Settings: ', settings);
+  // Function to update the display limit
+  const setDisplayLimit = (limit) => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      displayLimit: limit,
+    }));
+  };
 
-        // Save updated settings to local storage
-        localStorage.setItem('taskAppSettings', JSON.stringify(settings));
+  // Function to toggle the hideCompleted setting
+  const toggleHideCompleted = () => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      hideCompleted: !prevSettings.hideCompleted,
+    }));
+  };
 
-        const sortTasks = () => {
-            const sortOrder = {
-                'Easy': 1,
-                'Medium': 2,
-                'Hard': 3,
-            };
+  // Function to update the sort field
+  const setSortField = (field) => {
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      sortField: field,
+    }));
+  };
 
-            setSortedTasks([...tasks].sort((a, b) => {
-                if (settings.sortField === 'difficulty') {
-                    return sortOrder[a.difficulty] - sortOrder[b.difficulty];
-                }
-                if (settings.sortField === 'name' || settings.sortField === 'description' || settings.sortField === 'assignee') {
-                    return a[settings.sortField].localeCompare(b[settings.sortField]);
-                }
-                return 0;
-            }));
-        };
+  // Object with the settings state and settings-related functions
+  const value = {
+    settings,
+    setDisplayLimit,
+    toggleHideCompleted,
+    setSortField,
+  };
 
-        sortTasks();
-    }, [tasks, settings, setSortedTasks]);
-
-    const contextValue = {
-        settings,
-        setSettings,
-    };
-
-    return (
-        <SettingsContext.Provider value={contextValue}>
-            {children}
-        </SettingsContext.Provider>
-    );
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  );
 };

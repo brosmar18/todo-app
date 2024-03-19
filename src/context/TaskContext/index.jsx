@@ -1,66 +1,62 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useContext, useState } from "react";
+import { AuthContext } from "../AuthContext";
 
-const TasksContext = createContext();
+export const TaskContext = createContext();
 
-export const useTasks = () => useContext(TasksContext);
+// custom hook to easily access the TaskContext value
+export const useTasks = () => {
+  const context = useContext(TaskContext);
+  if (context === undefined) {
+    throw new Error("useTasks must be used within a TaskProvider");
+  }
+  return context;
+};
 
-export const TasksProvider = ({ children }) => {
-    const [tasks, setTasks] = useState(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        return savedTasks ? JSON.parse(savedTasks) : [];
-    });
-    const [sortedTasks, setSortedTasks] = useState([]);
+// TaskProvider component that provides the task-related functionality
+export const TaskProvider = ({ children }) => {
+  const [tasks, setTasks] = useState([]);
 
-    // Save tasks to localStorage whenever the tasks state changes
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, [tasks]);
+  // Access the user object from the AuthContext
+  const { user } = useContext(AuthContext);
 
-    const addTask = (task) => {
-        const newTask = { ...task, status: 'Not Started' };
-        setTasks((currentTasks) => [...currentTasks, newTask]);
-    };
+  // Function to add a new task
+  const addTask = (task) => {
+    if (user && user.capabilities.includes("create")) {
+      setTasks([...tasks, task]);
+    } else {
+      console.log("User does not have permission to create tasks");
+    }
+  };
 
-    const deleteTask = (id) => {
-        setTasks((currentTasks) =>
-            currentTasks.map((task) =>
-                task.id === id ? { ...task, status: 'Deleted' } : task
-            )
-        );
-    };
+  // Function to update an existing task
+  const updateTask = (updatedTask) => {
+    if (user && user.capabilities.includes("update")) {
+      const updatedTasks = tasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+      setTasks(updatedTasks);
+    } else {
+      console.log("User does not have permission to update tasks");
+    }
+  };
 
+  // Function to delete a task
+  const deleteTask = (taskId) => {
+    if (user && user.capabilities.includes("delete")) {
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
+      setTasks(updatedTasks);
+    } else {
+      console.log("User does not have permission to delete tasks");
+    }
+  };
 
-    const permanentlyDeleteTask = (id) => {
-        setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
-        // Since setTasks is async, update localStorage after a brief delay
-        setTimeout(() => {
-            localStorage.setItem('tasks', JSON.stringify(tasks.filter((task) => task.id !== id)));
-        }, 100);
-    };
+  // Object with the tasks state and task-related functions
+  const value = {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+  };
 
-
-    // Updated to change task status to "Completed"
-    const completeTask = (id) => {
-        setTasks((currentTasks) =>
-            currentTasks.map((task) =>
-                task.id === id ? { ...task, status: 'Completed' } : task
-            )
-        );
-    };
-
-    return (
-        <TasksContext.Provider
-            value={{
-                tasks,
-                sortedTasks,
-                setSortedTasks,
-                addTask,
-                deleteTask,
-                completeTask,
-                permanentlyDeleteTask
-            }}
-        >
-            {children}
-        </TasksContext.Provider>
-    );
+  return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
