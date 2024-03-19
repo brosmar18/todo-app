@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mantine/core": "^7.5.3",
+    "@mantine/form": "^7.6.2",
     "@mantine/hooks": "^7.5.3",
     "@tabler/icons-react": "^2.47.0",
     "framer-motion": "^11.0.5",

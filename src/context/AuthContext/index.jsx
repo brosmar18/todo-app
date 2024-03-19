@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = React.createContext();
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
@@ -72,5 +72,3 @@ const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
-
-export default AuthProvider;

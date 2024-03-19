@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react";
-
 export const SettingsContext = createContext();
 
 // Custom hook to easily access the SettingsContext value
