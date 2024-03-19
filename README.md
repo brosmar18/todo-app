@@ -8,7 +8,6 @@
 
 In this phase of the ToDo App, significant enhancements were made to improve user customization and application efficiency. By integrating the Context API, the app now allows users to modify default settings, including the number of tasks displayed per page, whether to hide or display completed tasks, and a sort by option. These settings adjustments are facilitated through a new component, which can be accessed directly from the main navigation, ensuring ease of use and improved navigation. Crucially, users' updated preferences are saved to Local Storage, enabling the application to retrieve and apply these settings upon startup. This development ensures a more personalized and seamless user experience, catering to individual preferences and enhancing overall task management.
 
-
 ### Links and Resources
 
 - Main Branch [Deployment](https://todo-app-brosmar18.vercel.app/)
@@ -33,7 +32,7 @@ A .env file is included in local repository. A .env-sample file is uploaed to th
 
 ### Context-Driven Configuration
 
-The latest enhancements in the ToDo App introduce a refined approach to managing global settings and task operations through the Context API, focusing on user customization and efficient task management. The app  utilizes two main contexts, `SettingsContext` and `TasksContext`, to centralize configuration and streamline task management processes.
+The latest enhancements in the ToDo App introduce a refined approach to managing global settings and task operations through the Context API, focusing on user customization and efficient task management. The app utilizes two main contexts, `SettingsContext` and `TasksContext`, to centralize configuration and streamline task management processes.
 
 `SettingsContext` has been upgraded to dynamically manage and persist user preferences for the application's display settings. It allows users to customize how many tasks are shown per page, whether completed tasks are displayed, and the criteria for sorting tasks, such as by task name. These preferences are stored in Local Storage, ensuring that users' customization choices are retained and automatically applied upon each app startup, fostering a personalized user experience.
 
@@ -60,12 +59,9 @@ The application's task management functionalities have been enhanced to provide 
 A key addition to the application's task management capabilities is the Trash Bin feature, designed to offer users greater control and flexibility over their task deletions. This feature addresses the need for a safety net when tasks are removed, either intentionally or by mistake, enhancing the user experience with a layer of protection against accidental deletions.
 
 - **Deleting Tasks**: Users have the ability to delete tasks from their current list. Instead of permanent deletion, tasks are moved to a dedicated "Deleted Tasks" area. This approach mimics the functionality of a trash bin, allowing users to reconsider their decision before finalizing the deletion of any task.
-  
 - **Trash Bin Management**: The tasks marked for deletion are collected and displayed in the "Deleted Tasks" window, rendered by the `<DeletedTasks />` component. Within this window, users are presented with two options: they can either restore the deleted task back to their active list if the deletion was unintended or permanently remove the task from the trash bin. This dual-option functionality provides a fail-safe, ensuring that tasks are only permanently deleted when the user is certain of their decision.
 
 The introduction of the Trash Bin feature significantly augments the application's task management system, offering users a forgiving mechanism to manage task deletions and recover from accidental losses, thereby enhancing overall user satisfaction and the usability of the application.
-
-
 
 ### Responsive Navbar with Framer Motion
 
@@ -79,12 +75,31 @@ A custom `useForm` hook streamlines form handling within the app, encapsulating 
 
 The `Form` component, empowered by the `useForm` hook, offers a user-friendly interface for adding tasks. It includes input fields for task details, assignee, and a difficulty level slider, providing an intuitive way for users to define their tasks. Upon submission, tasks are assigned a unique ID using `uuid`, marked as incomplete by default, and added to the task list through the `addTask` function from `TasksContext`. This feature not only enhances the app's interactivity but also showcases the effective use of custom hooks, context API, and external libraries to manage and expand the app's functionality.
 
+### User Authentication and Authorization
 
+The ToDo App now includes user authentication and authorization, ensuring secure access based on user roles and permissions.
 
-## Tests 
+#### Login/Auth React Context
+
+- **User Authentication**: The `AuthContext` manages the user's login state and user object. It provides functions for logging in and out, as well as checking user capabilities.
+- **Capability-based Authorization**: The `can` function in the `AuthContext` checks if the user has a specific capability, allowing for fine-grained access control.
+- **Persistent Login**: The user's login state and token are stored in the browser's local storage, allowing them to remain logged in even after refreshing the page.
+
+#### Protected Routes and Conditional Rendering
+
+- **Protected Routes**: The `App` component uses React Router to define protected routes that require authentication. If the user is not logged in, they are redirected to the login page.
+- **Conditional Rendering**: The `App` component conditionally renders components and pages based on the user's login state. Authenticated users have access to the main application layout and its routes, while unauthenticated users are limited to the login page.
+
+#### Capability-based Access Control in Components
+
+- **Task List Component**: The `TaskList` component uses the `can` function from the `AuthContext` to conditionally render task management features. Users with the "update" capability can mark tasks as completed, and users with the "delete" capability can delete tasks.
+- **Task Form Component**: The `TaskForm` component also uses the `can` function to control access to task creation. If the user has the "create" capability, they can access the form to add new tasks. Otherwise, a message is displayed indicating that they don't have permission to create tasks.
+
+By leveraging the `AuthContext` and the `can` function, the ToDo App provides a secure and personalized experience based on user roles and permissions. The app ensures that users can only access and perform actions they are authorized to, enhancing the overall security and integrity of the application.
+
+## Tests
 
 ### Testing Setup and Implementation
-
 
 - **Testing Framework**: Utilization of Vitest for effective React component and application logic testing.
 
@@ -92,7 +107,7 @@ The `Form` component, empowered by the `useForm` hook, offers a user-friendly in
 
 - **Testing Scripts**: The `package.json` includes a test script for executing tests with coverage reporting.
 
-- **React Testing Integration**: Empowers user-centric testing for React components. 
+- **React Testing Integration**: Empowers user-centric testing for React components.
 
 - **Global Test Setup**: Implemented in `tests/setup.js`, standardizing testing behaviors, including cleanup after each test.
 
@@ -118,12 +133,11 @@ Testing of the AddTask component ensures it effectively facilitates the task add
 
 These tests collectively ensure the components of the ToDo App are reliable and function as intended, providing a solid user experience.
 
-
 ### Running the Tests
 
 To run the tests, execute the `npm test` command.
 
-### Incomplete or Skipped Tests  
+### Incomplete or Skipped Tests
 
 At this stage, all essential component tests have been implemented. Any future tests or enhancements will be noted in subsequent updates or phases.
 
