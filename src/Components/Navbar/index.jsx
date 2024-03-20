@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { logo } from "../../assets";
+import { logo, avatar } from "../../assets";
 import { AuthContext } from "../../context/AuthContext";
 import {
   Box,
@@ -46,10 +46,7 @@ const Navbar = () => {
             >
               <Menu.Target>
                 <UnstyledButton className="flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-gray-100">
-                  <Avatar
-                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
-                    radius="xl"
-                  />
+                  <Avatar src={avatar} radius="xl" />
                   <div className="flex flex-col">
                     <Text size="sm" fw={500}>
                       {user.firstName} {user.lastName}
