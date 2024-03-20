@@ -6,21 +6,21 @@ import {
 } from "react-router-dom";
 import { Account, Calendar, Home, TasksPage, Settings, Auth } from "./pages";
 import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
 import { AuthContext } from "./context/AuthContext";
 import { useContext } from "react";
+import Sidebar from "./Components/Sidebar";
 
 const App = () => {
   const { isLoggedIn } = useContext(AuthContext);
 
   const ProtectedLayout = () => {
     return (
-      <div className="flex flex-col h-screen">
+      <div className="bg-gray-100">
         <Navbar />
-        <div className="flex-1">
+        <main className="flex">
+          <Sidebar />
           <Outlet />
-        </div>
-        <Footer />
+        </main>
       </div>
     );
   };

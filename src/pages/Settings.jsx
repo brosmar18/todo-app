@@ -1,11 +1,7 @@
-import SettingsMenu from "../Components/SettingsMenu";
+import React from "react";
 
 const Settings = () => {
-    return (
-        <div className='w-full h-full p-4 flex justify-center items-center bg-blue-50'>
-            <SettingsMenu />
-        </div>
-    )
-}
+  return <div>Settings</div>;
+};
 
-export default Settings
+export default Settings;
