@@ -1,73 +1,90 @@
-import React, { useState, useEffect } from "react";
-import testUsers from "./lib/users";
-import { jwtDecode } from "jwt-decode";
+// AuthContext/index.jsx
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
-export const AuthContext = React.createContext();
+// Set the base URL for the backend server
+const BASE_URL = "http://localhost:3001";
+
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Check if user has a specific capability
-  const can = (capability) => {
-    return user?.capabilities?.includes(capability);
-  };
-
-  // Validate JWT token
-  const _validateToken = (token) => {
-    try {
-      let validUser = jwtDecode(token);
-      console.log("validUser", validUser);
-      if (validUser) {
-        setUser(validUser);
-        setIsLoggedIn(true);
-        localStorage.setItem("auth", JSON.stringify({ token }));
-        console.log("I am logged in!");
-      }
-    } catch (e) {
-      setError(e);
-      console.log(e);
-    }
-  };
-
-  // Login function
-  const login = (username, password) => {
-    let user = testUsers[username];
-    if (user && user.password === password) {
-      try {
-        _validateToken(user.token);
-      } catch (e) {
-        setError(e);
-        console.log(e);
-      }
-    }
-  };
-
-  // Logout function
-  const logout = () => {
-    setUser({});
-    setIsLoggedIn(false);
-    localStorage.removeItem("auth");
-    console.log("I am logged out!");
-  };
-
-  // Check if user is already logged in on component mount
+  // useEffect hook to check for stored token and fetch user data on component mount
   useEffect(() => {
-    const storedAuth = localStorage.getItem("auth");
-    if (storedAuth) {
-      const { token } = JSON.parse(storedAuth);
-      _validateToken(token);
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      setIsLoggedIn(true);
+      fetchUserData(storedToken);
     }
   }, []);
 
+  // Function to fetch user data using the token
+  const fetchUserData = async (token) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(response.data);
+    } catch (error) {
+      setError("Failed to fetch user data");
+    }
+  };
+
+  // Function to register a new user
+  const register = async (userData) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`${BASE_URL}/register`, userData);
+      setUser(response.data);
+      setToken(response.data.token);
+      setIsLoggedIn(true);
+      localStorage.setItem("token", response.data.token);
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.message);
+      setLoading(false);
+    }
+  };
+
+  // Function to log in a user
+  const login = async (userData) => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`${BASE_URL}/login`, userData);
+      setUser(response.data.user);
+      setToken(response.data.token);
+      setIsLoggedIn(true);
+      localStorage.setItem("token", response.data.token);
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.message);
+      setLoading(false);
+    }
+  };
+
+  // Function to log out a user
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+  };
+
   const values = {
-    isLoggedIn,
     user,
+    token,
+    isLoggedIn,
     error,
+    loading,
+    register,
     login,
     logout,
-    can,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

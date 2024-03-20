@@ -10,15 +10,30 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 const Auth = () => {
-  const { login } = useContext(AuthContext);
-  const [username, setUsername] = useState("");
+  const { login, register, error, loading } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [role, setRole] = useState("");
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    login(username, password);
+    login({ email, password });
+  };
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      firstName,
+      lastName,
+      role,
+      email,
+      password,
+    };
+    register(userData);
   };
 
   const toggleForm = () => {
@@ -44,12 +59,13 @@ const Auth = () => {
             </div>
             <form onSubmit={handleLoginSubmit}>
               <TextInput
-                label="Username"
-                id="username"
-                placeholder="username"
+                label="Email"
+                id="email"
+                placeholder="Your email"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mb-4"
               />
               <PasswordInput
@@ -57,7 +73,6 @@ const Auth = () => {
                 id="password"
                 placeholder="Your password"
                 required
-                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="mb-4"
@@ -99,26 +114,39 @@ const Auth = () => {
                 Login
               </Anchor>
             </div>
-            <form>
+            <form onSubmit={handleRegisterSubmit}>
               <TextInput
                 label="First Name"
                 id="firstName"
-                placeholder="first name"
+                placeholder="First name"
                 required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 className="mb-4"
               />
               <TextInput
                 label="Last Name"
                 id="lastName"
-                placeholder="last name"
+                placeholder="Last name"
                 required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 className="mb-4"
               />
               <NativeSelect
                 label="Role"
                 id="role"
+                placeholder="Choose a role" 
                 required
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
                 data={[
+                  {
+                    value: "",
+                    label: "Choose a role",
+                    disabled: true,
+                    hidden: true,
+                  }, 
                   "Software Developer",
                   "Graphic Designer",
                   "Team Lead",
@@ -126,11 +154,15 @@ const Auth = () => {
                 ]}
                 className="mb-4"
               />
+
               <TextInput
-                label="Username"
-                id="username"
-                placeholder="username"
+                label="Email"
+                id="email"
+                placeholder="Your email"
                 required
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mb-4"
               />
               <PasswordInput
@@ -138,7 +170,8 @@ const Auth = () => {
                 id="password"
                 placeholder="Your password"
                 required
-                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mb-4"
               />
               <Button
@@ -151,6 +184,8 @@ const Auth = () => {
             </form>
           </>
         )}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+        {loading && <p>Loading...</p>}
       </div>
     </section>
   );
