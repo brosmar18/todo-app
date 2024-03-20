@@ -4,5 +4,6 @@ import Home from "./Home";
 import TasksPage from "./TasksPage";
 import Settings from "./Settings";
 import Auth from "./Auth";
+import Team from "./Team";
 
-export { Account, Calendar, Home, TasksPage, Settings, Auth };
+export { Account, Calendar, Home, TasksPage, Settings, Auth, Team };

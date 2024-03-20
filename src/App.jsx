@@ -4,7 +4,15 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import { Account, Calendar, Home, TasksPage, Settings, Auth } from "./pages";
+import {
+  Account,
+  Calendar,
+  Home,
+  TasksPage,
+  Settings,
+  Auth,
+  Team,
+} from "./pages";
 import Navbar from "./Components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { useContext } from "react";
@@ -40,6 +48,7 @@ const App = () => {
         { path: "settings", element: <Settings /> },
         { path: "calendar", element: <Calendar /> },
         { path: "account", element: <Account /> },
+        { path: "team", element: <Team /> },
       ],
     },
     {

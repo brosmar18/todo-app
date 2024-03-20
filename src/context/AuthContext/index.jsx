@@ -13,29 +13,16 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // useEffect hook to check for stored token and fetch user data on component mount
+  // useEffect hook to check for stored token and user data on component mount
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    if (storedToken) {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedToken && storedUser) {
       setToken(storedToken);
+      setUser(storedUser);
       setIsLoggedIn(true);
-      fetchUserData(storedToken);
     }
   }, []);
-
-  // Function to fetch user data using the token
-  const fetchUserData = async (token) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/users/${user._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUser(response.data);
-      console.log("User data fetched:", response.data);
-    } catch (error) {
-      setError("Failed to fetch user data");
-      console.error("Failed to fetch user data:", error);
-    }
-  };
 
   // Function to register a new user
   const register = async (userData) => {
@@ -46,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       setToken(response.data.token);
       setIsLoggedIn(true);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
       console.log("User registered:", response.data);
     } catch (error) {
@@ -64,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       setToken(response.data.token);
       setIsLoggedIn(true);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       setLoading(false);
       console.log("User logged in:", response.data.user);
     } catch (error) {
@@ -79,6 +68,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setIsLoggedIn(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     console.log("User logged out");
   };
 
