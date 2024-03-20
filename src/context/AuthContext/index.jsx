@@ -1,4 +1,3 @@
-// AuthContext/index.jsx
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
@@ -27,12 +26,14 @@ export const AuthProvider = ({ children }) => {
   // Function to fetch user data using the token
   const fetchUserData = async (token) => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/user`, {
+      const response = await axios.get(`${BASE_URL}/users/${user._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(response.data);
+      console.log("User data fetched:", response.data);
     } catch (error) {
       setError("Failed to fetch user data");
+      console.error("Failed to fetch user data:", error);
     }
   };
 
@@ -46,9 +47,11 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       localStorage.setItem("token", response.data.token);
       setLoading(false);
+      console.log("User registered:", response.data);
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
+      console.error("Registration failed:", error);
     }
   };
 
@@ -62,9 +65,11 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       localStorage.setItem("token", response.data.token);
       setLoading(false);
+      console.log("User logged in:", response.data.user);
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
+      console.error("Login failed:", error);
     }
   };
 
@@ -74,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setIsLoggedIn(false);
     localStorage.removeItem("token");
+    console.log("User logged out");
   };
 
   const values = {
