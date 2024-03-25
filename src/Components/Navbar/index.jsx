@@ -1,76 +1,26 @@
-import { Avatar } from "@mantine/core";
-import { logo } from "../../assets";
-import { Link, NavLink } from "react-router-dom";
-import { IconBell } from "@tabler/icons-react";
-import { useContext, useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useContext } from "react";
+import { logo, avatar } from "../../assets";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  Box,
+  Button,
+  Menu,
+  Burger,
+  Drawer,
+  ScrollArea,
+  UnstyledButton,
+  Text,
+  Avatar,
+  Group,
+} from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
-  const { logout } = useContext(AuthContext);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
-  const topVariants = {
-    closed: {
-      rotate: 0,
-    },
-    opened: {
-      rotate: 45,
-      backgroundColor: "rgb(255, 255, 255)",
-    },
-  };
-
-  const centerVariants = {
-    closed: {
-      opacity: 1,
-    },
-    opened: {
-      opacity: 0,
-    },
-  };
-
-  const bottomVariants = {
-    closed: {
-      rotate: 0,
-    },
-    opened: {
-      rotate: -45,
-      backgroundColor: "rgb(255, 255, 255)",
-    },
-  };
-
-  const listVariants = {
-    closed: {
-      opacity: 0,
-      transition: {
-        when: "afterChildren",
-      },
-    },
-    opened: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const listItemVariants = {
-    closed: {
-      y: 20,
-      opacity: 0,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    opened: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-      },
-    },
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleLogout = () => {
@@ -78,88 +28,84 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between px-4 py-2.5 sm:px-12 lg:px-20 xl:px-48">
-      <div className="hidden sm:flex justify-between w-full">
-        <Link to="/">
-          <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
-        </Link>
-        <ul className="flex items-center gap-5 uppercase">
-          {["home", "tasks", "settings", "calendar"].map((link) => (
-            <li key={`link-${link}`}>
-              <NavLink to={link === "home" ? "/" : `/${link}`}>{link}</NavLink>
-            </li>
-          ))}
-        </ul>
-        <div className="flex items-center gap-2">
-          <Avatar size="md" src="https://i.pravatar.cc/300" />
-          <IconBell size={30} />
-          <button
-            className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"
-            onClick={handleLogout}
-          >
-            {" "}
-            Log Out
-          </button>
+    <Box height={64} className="bg-white shadow-lg">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 justify-between">
+          <div className="flex items-center">
+            <img src={logo} alt="Logo" width={50} height={50} />
+            <h2 className="ml-2 text-xl font-bold text-gray-800 sm:text-2xl md:text-3xl">
+              Task Manager
+            </h2>
+          </div>
+          <div className="hidden items-center md:flex">
+            <Menu
+              trigger="hover"
+              openDelay={100}
+              closeDelay={400}
+              transitionProps={{ transition: "pop-top-right" }}
+            >
+              <Menu.Target>
+                <UnstyledButton className="flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-gray-100">
+                  <Avatar src={avatar} radius="xl" />
+                  <div className="flex flex-col">
+                    <Text size="sm" fw={500}>
+                      {user.firstName} {user.lastName}
+                    </Text>
+                    <Text c="dimmed" size="xs">
+                      {user.email}
+                    </Text>
+                  </div>
+                  <IconChevronRight size={14} stroke={1.5} />
+                </UnstyledButton>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item component="a" href="#">
+                  Account Info
+                </Menu.Item>
+                <Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </div>
+          <div className="flex items-center md:hidden">
+            <Burger opened={isMobileMenuOpen} onClick={toggleMobileMenu} />
+          </div>
         </div>
       </div>
-      <div className="sm:hidden flex justify-end w-full">
-        <button
-          className="w-10 h-8 flex flex-col justify-between items-center z-30 relative"
-          onClick={() => setToggle(!toggle)}
-        >
-          <motion.div
-            variants={topVariants}
-            animate={toggle ? "opened" : "closed"}
-            className="w-10 h-[3px] bg-black rounded origin-left"
-          />
-          <motion.div
-            variants={centerVariants}
-            animate={toggle ? "opened" : "closed"}
-            className="w-10 h-[3px] bg-black rounded"
-          />
-          <motion.div
-            variants={bottomVariants}
-            animate={toggle ? "opened" : "closed"}
-            className="w-10 h-[3px] bg-black rounded origin-left"
-          />
-        </button>
-      </div>
-      {toggle && (
-        <motion.div
-          variants={listVariants}
-          initial="closed"
-          animate="opened"
-          className="absolute top-0 right-0 w-[80%] h-screen bg-gray-400 text-white flex flex-col items-center justify-center gap-8 z-20"
-        >
-          <Link to="/" onClick={() => setToggle(!toggle)}>
-            <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
-          </Link>
-          <ul className="flex items-center gap-5 uppercase">
-            {["home", "tasks", "settings", "calendar"].map((link) => (
-              <li key={`link-${link}`}>
-                <NavLink
-                  to={link == "home" ? "/" : `/${link}`}
-                  onClick={() => setToggle(false)}
-                >
-                  {link}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <div className="flex items-center gap-2">
-            <Avatar size="md" src="https://i.pravatar.cc/300" />
-            <IconBell size={30} />
-            <button
-              className="px-5 rounded-sm py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold"
-              onClick={handleLogout}
-            >
-              {" "}
-              Log Out
-            </button>
-          </div>
-        </motion.div>
-      )}
-    </nav>
+      <Drawer
+        opened={isMobileMenuOpen}
+        onClose={toggleMobileMenu}
+        padding="xl"
+        size="md"
+        position="right"
+        className="md:hidden"
+      >
+        <ScrollArea style={{ height: "calc(100vh - 60px)" }} type="always">
+          <Group mb="md">
+            <Avatar
+              src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
+              radius="xl"
+            />
+            <div>
+              <Text size="sm" fw={500}>
+                {user.firstName} {user.lastName}
+              </Text>
+              <Text c="dimmed" size="xs">
+                {user.email}
+              </Text>
+            </div>
+          </Group>
+          <UnstyledButton className="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">
+            <Text>Account Info</Text>
+          </UnstyledButton>
+          <UnstyledButton
+            className="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800"
+            onClick={handleLogout}
+          >
+            <Text>Logout</Text>
+          </UnstyledButton>
+        </ScrollArea>
+      </Drawer>
+    </Box>
   );
 };
 

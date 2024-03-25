@@ -11,6 +11,8 @@ In this phase of the ToDo App, significant enhancements were made to improve use
 ### Links and Resources
 
 - Main Branch [Deployment](https://todo-app-brosmar18.vercel.app/)
+- BackEnd Main Branch [Main](https://github.com/brosmar18/todo-app-server)
+- Backend Deployment [Deployment](https://todo-app-server-vxwh.onrender.com/)
 
 ### Collaborators
 
@@ -29,6 +31,26 @@ A .env file is included in local repository. A .env-sample file is uploaed to th
 #### How to use your library (where applicable)
 
 ## Features
+
+### Backend API with Express and MongoDB
+
+The ToDo App now includes a robust backend API built with Express.js and MongoDB. This backend infrastructure provides a solid foundation for handling data persistence, user authentication, and task management. The API follows RESTful principles and offers endpoints for various operations, such as creating, reading, updating, and deleting tasks and users.
+
+### User Authentication and Authorization
+
+The app implements a secure user authentication and authorization system. Users can register an account, log in with their credentials, and access protected routes based on their roles and permissions. The backend utilizes JSON Web Tokens (JWT) for authentication, ensuring that only authenticated users can perform certain actions like creating or modifying tasks.
+
+### Role-Based Access Control (RBAC)
+
+To enhance security and user management, the app incorporates Role-Based Access Control (RBAC). Each user is assigned a specific role, such as "Admin," "Manager," or "User," which determines their level of access and permissions within the app. The backend enforces these roles and permissions, ensuring that users can only perform actions allowed by their assigned role.
+
+### Data Persistence with MongoDB
+
+The backend integrates with MongoDB, a popular NoSQL database, to provide reliable data persistence. Task and user data are stored in separate collections, allowing for efficient querying and manipulation. The Mongoose library is used as an Object-Document Mapper (ODM) to facilitate interactions with the database, providing a convenient and structured way to define data models and perform database operations.
+
+### Error Handling and Logging
+
+The backend implements robust error handling mechanisms to gracefully handle and respond to errors that may occur during API requests. It includes custom error classes and middleware to catch and format errors, providing meaningful error messages to the client. Additionally, the app utilizes a logging system to track important events, errors, and user actions, aiding in debugging and monitoring the application's behavior.
 
 ### Context-Driven Configuration
 
@@ -67,35 +89,6 @@ The introduction of the Trash Bin feature significantly augments the application
 
 The ToDo App introduces a responsive `Navbar` component, enhanced with animations using `framer-motion`. This feature enables a smooth transition for the mobile menu, creating an engaging user experience. The navbar dynamically adjusts to screen size, displaying a full menu for desktop views and a collapsible menu for mobile views, triggered by the `IconMenu2` icon. The collapsible state is managed by a `useState` hook, and the transition effect is applied as the menu slides in from the side, providing a modern and interactive navigation system.
 
-### Custom Form Hook for Task Management
-
-A custom `useForm` hook streamlines form handling within the app, encapsulating functionality for managing form state, handling changes, and submitting form data. This abstraction simplifies form implementation across the app, ensuring consistency and reducing boilerplate code. The hook is utilized in the `Form` component, where users can add new tasks, specifying details such as the task description, assignee, and difficulty level. The form leverages the `useTasks` context for adding tasks to the global state, demonstrating a seamless integration of custom hooks and context for state management.
-
-### Task Addition with Dynamic Form
-
-The `Form` component, empowered by the `useForm` hook, offers a user-friendly interface for adding tasks. It includes input fields for task details, assignee, and a difficulty level slider, providing an intuitive way for users to define their tasks. Upon submission, tasks are assigned a unique ID using `uuid`, marked as incomplete by default, and added to the task list through the `addTask` function from `TasksContext`. This feature not only enhances the app's interactivity but also showcases the effective use of custom hooks, context API, and external libraries to manage and expand the app's functionality.
-
-### User Authentication and Authorization
-
-The ToDo App now includes user authentication and authorization, ensuring secure access based on user roles and permissions.
-
-#### Login/Auth React Context
-
-- **User Authentication**: The `AuthContext` manages the user's login state and user object. It provides functions for logging in and out, as well as checking user capabilities.
-- **Capability-based Authorization**: The `can` function in the `AuthContext` checks if the user has a specific capability, allowing for fine-grained access control.
-- **Persistent Login**: The user's login state and token are stored in the browser's local storage, allowing them to remain logged in even after refreshing the page.
-
-#### Protected Routes and Conditional Rendering
-
-- **Protected Routes**: The `App` component uses React Router to define protected routes that require authentication. If the user is not logged in, they are redirected to the login page.
-- **Conditional Rendering**: The `App` component conditionally renders components and pages based on the user's login state. Authenticated users have access to the main application layout and its routes, while unauthenticated users are limited to the login page.
-
-#### Capability-based Access Control in Components
-
-- **Task List Component**: The `TaskList` component uses the `can` function from the `AuthContext` to conditionally render task management features. Users with the "update" capability can mark tasks as completed, and users with the "delete" capability can delete tasks.
-- **Task Form Component**: The `TaskForm` component also uses the `can` function to control access to task creation. If the user has the "create" capability, they can access the form to add new tasks. Otherwise, a message is displayed indicating that they don't have permission to create tasks.
-
-By leveraging the `AuthContext` and the `can` function, the ToDo App provides a secure and personalized experience based on user roles and permissions. The app ensures that users can only access and perform actions they are authorized to, enhancing the overall security and integrity of the application.
 
 ## Tests
 
