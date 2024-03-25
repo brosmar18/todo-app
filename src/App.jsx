@@ -9,7 +9,7 @@ import {
   Calendar,
   Home,
   TasksPage,
-  Settings,
+  SettingsPage,
   Auth,
   Team,
 } from "./pages";
@@ -45,7 +45,7 @@ const App = () => {
       children: [
         { path: "/", element: <Home /> },
         { path: "tasks", element: <TasksPage /> },
-        { path: "settings", element: <Settings /> },
+        { path: "settings", element: <SettingsPage /> },
         { path: "calendar", element: <Calendar /> },
         { path: "account", element: <Account /> },
         { path: "team", element: <Team /> },

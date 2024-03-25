@@ -6,6 +6,7 @@ import {
   IconChecks,
   IconCalendar,
   IconUsers,
+  IconSettings,
 } from "@tabler/icons-react";
 
 const Sidebar = () => {
@@ -55,6 +56,16 @@ const Sidebar = () => {
               <IconUsers />
             </ThemeIcon>
             <Text>Team</Text>
+          </UnstyledButton>
+          <UnstyledButton
+            component={Link}
+            to="/settings"
+            className="flex items-center rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-100"
+          >
+            <ThemeIcon variant="light" size="md" className="mr-2">
+              <IconSettings />
+            </ThemeIcon>
+            <Text>Settings</Text>
           </UnstyledButton>
         </Flex>
       </Flex>

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+
 export const SettingsContext = createContext();
 
 // Custom hook to easily access the SettingsContext value
@@ -24,6 +25,7 @@ export const SettingsProvider = ({ children }) => {
       ...prevSettings,
       displayLimit: limit,
     }));
+    console.log("Display Limit updated:", limit);
   };
 
   // Function to toggle the hideCompleted setting
@@ -32,6 +34,7 @@ export const SettingsProvider = ({ children }) => {
       ...prevSettings,
       hideCompleted: !prevSettings.hideCompleted,
     }));
+    console.log("Hide Completed Tasks toggled:", !settings.hideCompleted);
   };
 
   // Function to update the sort field
@@ -40,6 +43,7 @@ export const SettingsProvider = ({ children }) => {
       ...prevSettings,
       sortField: field,
     }));
+    console.log("Sort Field updated:", field);
   };
 
   // Object with the settings state and settings-related functions
