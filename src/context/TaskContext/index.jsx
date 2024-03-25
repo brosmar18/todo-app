@@ -34,7 +34,6 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // Function to add a new task
   const addTask = async (task) => {
     if (user && user.capabilities.includes("create")) {
       try {
@@ -42,14 +41,15 @@ export const TaskProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTasks([...tasks, response.data]);
+        fetchTasks(); // Fetch tasks after adding a new task
       } catch (error) {
         console.error("Error adding task:", error);
+        throw error; // Throw the error to be caught in the component
       }
     } else {
       console.log("User does not have permission to create tasks");
     }
   };
-
   // Function to update an existing task
   const updateTask = async (updatedTask) => {
     if (user && user.capabilities.includes("update")) {

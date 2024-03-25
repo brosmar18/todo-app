@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
 
   // useEffect hook to check for stored token and user data on component mount
   useEffect(() => {
@@ -37,7 +36,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
       console.log("User registered:", response.data);
-      fetchUsers(response.data.token); // Fetch all users after registration
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
@@ -57,7 +55,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setLoading(false);
       console.log("User logged in:", response.data.user);
-      fetchUsers(response.data.token); // Fetch all users after login
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
@@ -75,18 +72,6 @@ export const AuthProvider = ({ children }) => {
     console.log("User logged out");
   };
 
-  // Function to fetch all users
-  const fetchUsers = async (token) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUsers(response.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
   const values = {
     user,
     token,
@@ -96,7 +81,6 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
-    users,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

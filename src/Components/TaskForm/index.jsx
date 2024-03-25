@@ -1,96 +1,78 @@
-import React, { useState, useContext } from "react";
-import { TaskContext } from "../../context/TaskContext";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import axios from "axios";
+import { TextInput, Textarea, Select, Button } from "@mantine/core";
 import { AuthContext } from "../../context/AuthContext";
 
-const TaskForm = () => {
-  const [taskName, setTaskName] = useState("");
-  const [description, setDescription] = useState("");
-  const [assigneeId, setAssigneeId] = useState("");
-  const [difficulty, setDifficulty] = useState("easy");
-  const { users } = useContext(AuthContext);
-  const { addTask } = useContext(TaskContext);
+const TaskForm = ({ onSubmit }) => {
+  const [users, setUsers] = useState([]);
+  const { user } = useContext(AuthContext);
+  const formRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3001/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const fetchedUsers = response.data.map((user) => ({
+        value: user._id,
+        label: `${user.firstName} ${user.lastName}`,
+      }));
+      setUsers(fetchedUsers);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const taskName = e.target.taskName.value;
+    const description = e.target.description.value;
+    const assigneeId = e.target.assignee.value;
+    const difficulty = e.target.difficulty.value;
+
     const newTask = {
       taskName,
       description,
-      assigneeId,
+      createdBy: user._id,
+      assignee: assigneeId,
       difficulty,
     };
-    addTask(newTask);
-    setTaskName("");
-    setDescription("");
-    setAssigneeId("");
-    setDifficulty("easy");
+
+    await onSubmit(newTask);
+    formRef.current.reset();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Task Name
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-          type="text"
-          placeholder="Task Name"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Description
-        </label>
-        <textarea
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Assignee
-        </label>
-        <select
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          value={assigneeId}
-          onChange={(e) => setAssigneeId(e.target.value)}
-        >
-          <option value="">Select Assignee</option>
-          {users.map((user) => (
-            <option key={user._id} value={user._id}>
-              {user.firstName} {user.lastName}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="difficulty"
-        >
-          Difficulty
-        </label>
-        <select
-          className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="difficulty"
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        type="submit"
-      >
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+      <TextInput placeholder="Task Name" name="taskName" required />
+      <Textarea placeholder="Description" name="description" required />
+      <Select
+        placeholder="Select Assignee"
+        name="assignee"
+        data={users}
+        searchable
+        required
+      />
+      <Select
+        placeholder="Select Difficulty"
+        name="difficulty"
+        data={[
+          { value: "easy", label: "Easy" },
+          { value: "medium", label: "Medium" },
+          { value: "hard", label: "Hard" },
+        ]}
+        required
+      />
+      <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-700">
         Add Task
-      </button>
+      </Button>
     </form>
   );
 };
