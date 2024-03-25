@@ -11,8 +11,8 @@ import { AuthContext } from "../context/AuthContext";
 
 const Auth = () => {
   const { login, register, error, loading } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("bgarduno@email.com");
+  const [password, setPassword] = useState("GardunoPassword123");
   const [rememberMe, setRememberMe] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -136,7 +136,7 @@ const Auth = () => {
               <NativeSelect
                 label="Role"
                 id="role"
-                placeholder="Choose a role" 
+                placeholder="Choose a role"
                 required
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
@@ -146,7 +146,7 @@ const Auth = () => {
                     label: "Choose a role",
                     disabled: true,
                     hidden: true,
-                  }, 
+                  },
                   "Software Developer",
                   "Graphic Designer",
                   "Team Lead",
