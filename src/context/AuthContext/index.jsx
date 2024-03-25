@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 // Set the base URL for the backend server
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://todo-app-server-vxwh.onrender.com";
 
 export const AuthContext = createContext();
 

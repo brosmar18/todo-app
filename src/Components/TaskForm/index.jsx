@@ -15,11 +15,14 @@ const TaskForm = ({ onSubmit }) => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3001/api/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://todo-app-server-vxwh.onrender.com/api/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const fetchedUsers = response.data.map((user) => ({
         value: user._id,
         label: `${user.firstName} ${user.lastName}`,

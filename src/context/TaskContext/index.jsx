@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://todo-app-server-vxwh.onrender.com";
 
 export const TaskContext = createContext();
 
